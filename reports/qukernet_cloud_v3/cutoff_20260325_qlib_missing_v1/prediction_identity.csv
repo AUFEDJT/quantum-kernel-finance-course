@@ -1,0 +1,2 @@
+﻿rows,different_class_predictions,different_decision_values,max_abs_decision_difference,endpoint_auc,initial_auc
+50,0,50,0.09478855367414357,0.5308441558441558,0.5211038961038961

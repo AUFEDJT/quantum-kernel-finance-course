@@ -87,14 +87,17 @@ def feature_index(layout, position):
     return index
 
 
-def make_mask(layout, seed, config_index, max_parameters):
+def make_mask(layout, seed, config_index, max_parameters, exact_parameters=None):
     """Same q/p/depth/config seed gives the same mask across all layouts."""
     allowed = valid_positions(layout)
     if not 1 <= max_parameters <= len(allowed):
         raise ValueError("Invalid replacement-parameter cap")
     rng = np.random.default_rng(np.random.SeedSequence(
         [int(seed), layout["qubits"], layout["features"], layout["depth"], int(config_index)]))
-    size = int(rng.integers(1, max_parameters + 1))
+    if exact_parameters is not None and (type(exact_parameters) is not int or
+                                        not 1 <= exact_parameters <= max_parameters):
+        raise ValueError("Exact parameter count must be an integer within the registered cap")
+    size = int(rng.integers(1, max_parameters + 1)) if exact_parameters is None else exact_parameters
     return sorted(int(v) for v in rng.choice(allowed, size=size, replace=False))
 
 
@@ -231,7 +234,7 @@ def encode_layout(layout, maximum_depth):
 
 
 def budget_estimate(n, v, o, labels, top_k, configurations, steps, batch_size,
-                    max_parameters, shots=128, repetitions=1):
+                    max_parameters, shots=128, repetitions=1, paired_initialization_control=False):
     values = (n, v, o, labels, top_k, configurations, steps, batch_size, shots, repetitions)
     if any(int(z) != z or z < 1 for z in values) or max_parameters < 1:
         raise ValueError("Positive integral budget inputs required")
@@ -240,6 +243,9 @@ def budget_estimate(n, v, o, labels, top_k, configurations, steps, batch_size,
              "preselection_probabilities": top_k*(a+n*v),
              "finetuning_probabilities": top_k*configurations*(2*a+n*v+steps*(1+4*max_parameters)*ab),
              "final_test_probabilities": n*o}
+    if paired_initialization_control:
+        parts["initial_validation_probabilities"] = top_k*configurations*n*v
+        parts["paired_initial_test_probabilities"] = n*o
     total = sum(parts.values())
     return {**parts, "probability_circuits_per_arm_seed": total,
             "nominal_shots_per_arm_seed": total*shots,
@@ -249,4 +255,6 @@ def budget_estimate(n, v, o, labels, top_k, configurations, steps, batch_size,
                             "every trainable RX/RY/RZ gate has both overlap ends differentiated",
                             "one independent parameter per replaced gate; 4 shifts per parameter",
                             "includes initial and final full training kernels and ALL final validation kernels",
-                            "excludes other method arms, TEK/other baselines, noise, retries and preflight"]}
+                            "excludes other method arms, TEK/other baselines, noise, retries and preflight"] +
+                           (["paired control includes ALL initialization validation kernels and selected post winner's same-mask initialization O kernel"]
+                            if paired_initialization_control else [])}

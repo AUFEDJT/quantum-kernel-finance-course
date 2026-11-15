@@ -1,0 +1,656 @@
+{
+  "schema": "efficacy_public_classical_snapshot_v1",
+  "snapshot_date": "2026-11-14",
+  "scope": "Frozen classical evidence and authorized three-quarter cloud protocol; not a live task monitor",
+  "evidence_status": {
+    "classical_baselines": "completed_local_actual",
+    "quantum_efficacy": "no_complete_results_in_this_snapshot"
+  },
+  "quantum_results": [],
+  "quantum_effect_conclusion": null,
+  "scope_limitations": [
+    "Development replay: 2022Q1, 2023Q1, 2024Q1; 2025 remains sealed",
+    "D0 raw-price labels; prediction diagnostics, not formal strategy net returns",
+    "11 evaluation dates per quarter, one search seed",
+    "Preflight success is not evidence of tuning or stock prediction benefit"
+  ],
+  "metrics": {
+    "primary": "Quarterly mean of per-date accuracy",
+    "row_weight": "1/(D*n_d)",
+    "quarter_aggregation": "equal",
+    "balanced_accuracy": "Mean of two recalls from date-equal weighted confusion mass"
+  },
+  "classical_rows": [
+    {
+      "quarter": "2022Q1",
+      "model": "linear",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.4375,
+      "balanced_accuracy": 0.42063492063492064,
+      "recall_class_0": 0.5555555555555556,
+      "recall_class_1": 0.2857142857142857,
+      "roc_auc": 0.41269841269841273,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "linear",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.5318181818181813,
+      "balanced_accuracy": 0.5182298321833204,
+      "recall_class_0": 0.5968992248062012,
+      "recall_class_1": 0.4395604395604396,
+      "roc_auc": 0.5303688559502512,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "rbf",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": 1.0,
+      "date_equal_accuracy": 0.5625,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.3174603174603175,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "rbf",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": 1.0,
+      "date_equal_accuracy": 0.5863636363636345,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5706618962432913,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "majority",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5625,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "majority",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.5863636363636345,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "always0",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5625,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "always0",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.5863636363636345,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "always1",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.4375,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 0.0,
+      "recall_class_1": 1.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2022Q1",
+      "model": "always1",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.41363636363636275,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 0.0,
+      "recall_class_1": 1.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "linear",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.4375,
+      "balanced_accuracy": 0.4375,
+      "recall_class_0": 0.375,
+      "recall_class_1": 0.5,
+      "roc_auc": 0.359375,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "linear",
+      "split": "O",
+      "evaluation_rows": 209,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.45454545454545486,
+      "balanced_accuracy": 0.47381259204712806,
+      "recall_class_0": 0.7422680412371137,
+      "recall_class_1": 0.2053571428571425,
+      "roc_auc": 0.4620765832106038,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "rbf",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": 0.1,
+      "date_equal_accuracy": 0.5625,
+      "balanced_accuracy": 0.5625,
+      "recall_class_0": 0.625,
+      "recall_class_1": 0.5,
+      "roc_auc": 0.453125,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "rbf",
+      "split": "O",
+      "evaluation_rows": 209,
+      "evaluation_dates": 11,
+      "gamma": 0.1,
+      "date_equal_accuracy": 0.47368421052631626,
+      "balanced_accuracy": 0.49512150220913104,
+      "recall_class_0": 0.793814432989691,
+      "recall_class_1": 0.19642857142857106,
+      "roc_auc": 0.4437592047128128,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "majority",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "majority",
+      "split": "O",
+      "evaluation_rows": 209,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.46411483253588615,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "always0",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "always0",
+      "split": "O",
+      "evaluation_rows": 209,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.46411483253588615,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "always1",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 0.0,
+      "recall_class_1": 1.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2023Q1",
+      "model": "always1",
+      "split": "O",
+      "evaluation_rows": 209,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.5358851674641162,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 0.0,
+      "recall_class_1": 1.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "linear",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.640625,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "linear",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.4181818181818173,
+      "balanced_accuracy": 0.4903056472779612,
+      "recall_class_0": 0.9569892473118279,
+      "recall_class_1": 0.023622047244094554,
+      "roc_auc": 0.5176530353060705,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "rbf",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": 0.1,
+      "date_equal_accuracy": 0.5,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.765625,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "rbf",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": 0.1,
+      "date_equal_accuracy": 0.4227272727272718,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.4991109982219962,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "majority",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "majority",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.4227272727272718,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "always0",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "always0",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.4227272727272718,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 1.0,
+      "recall_class_1": 0.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "always1",
+      "split": "V",
+      "evaluation_rows": 16,
+      "evaluation_dates": 8,
+      "gamma": null,
+      "date_equal_accuracy": 0.5,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 0.0,
+      "recall_class_1": 1.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    },
+    {
+      "quarter": "2024Q1",
+      "model": "always1",
+      "split": "O",
+      "evaluation_rows": 220,
+      "evaluation_dates": 11,
+      "gamma": null,
+      "date_equal_accuracy": 0.5772727272727255,
+      "balanced_accuracy": 0.5,
+      "recall_class_0": 0.0,
+      "recall_class_1": 1.0,
+      "roc_auc": 0.5,
+      "execution_location": "local_classical",
+      "status": "complete"
+    }
+  ],
+  "classical_training_counts": {
+    "2022Q1": [
+      9,
+      7
+    ],
+    "2023Q1": [
+      8,
+      8
+    ],
+    "2024Q1": [
+      14,
+      2
+    ]
+  },
+  "classical_input_transform": "x_angles/pi",
+  "classical_parameters": {
+    "C": 1.0,
+    "RBF_gamma_grid": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "RBF_selection": "validation date-equal accuracy, smaller gamma on ties",
+    "majority_tie_class": 0
+  },
+  "classical_rbf_minus_majority_bootstrap": {
+    "schema": "paired_date_bootstrap_v1",
+    "difference": "A minus B",
+    "status": "available",
+    "coverage": {
+      "expected_quarters": [
+        "2022Q1",
+        "2023Q1",
+        "2024Q1"
+      ],
+      "included": [
+        {
+          "quarter": "2022Q1",
+          "rows": 220,
+          "dates": 11
+        },
+        {
+          "quarter": "2023Q1",
+          "rows": 209,
+          "dates": 11
+        },
+        {
+          "quarter": "2024Q1",
+          "rows": 220,
+          "dates": 11
+        }
+      ],
+      "excluded": [],
+      "complete": true,
+      "zero_imputation": false
+    },
+    "repetitions": 10000,
+    "seed": 20261110,
+    "quarter_weighting": "equal among complete paired included quarters",
+    "interval": "95% percentile bootstrap, exploratory and not multiplicity adjusted",
+    "limitations": [
+      "Development replay, not a newly unseen financial holdout",
+      "Few dates and only three planned quarters limit bootstrap calibration",
+      "Does not represent seed, shot or model-selection uncertainty",
+      "Partial coverage does not estimate the missing-quarter contrast"
+    ],
+    "blocks": {
+      "2": {
+        "role": "primary",
+        "delta_date_equal_accuracy": {
+          "estimate": 0.0031897926634768905,
+          "ci95": [
+            -0.01594896331738434,
+            0.028708133971291867
+          ],
+          "usable_replicates": 10000,
+          "undefined_replicates": 0
+        },
+        "delta_balanced_accuracy": {
+          "estimate": -0.0016261659302896543,
+          "ci95": [
+            -0.022056536087996594,
+            0.01574908241574909
+          ],
+          "usable_replicates": 10000,
+          "undefined_replicates": 0
+        }
+      },
+      "1": {
+        "role": "sensitivity",
+        "delta_date_equal_accuracy": {
+          "estimate": 0.0031897926634768905,
+          "ci95": [
+            -0.019138755980861195,
+            0.02551834130781498
+          ],
+          "usable_replicates": 10000,
+          "undefined_replicates": 0
+        },
+        "delta_balanced_accuracy": {
+          "estimate": -0.0016261659302896543,
+          "ci95": [
+            -0.020816870041662387,
+            0.019303928095060627
+          ],
+          "usable_replicates": 10000,
+          "undefined_replicates": 0
+        }
+      },
+      "3": {
+        "role": "sensitivity",
+        "delta_date_equal_accuracy": {
+          "estimate": 0.0031897926634768905,
+          "ci95": [
+            -0.011164274322169007,
+            0.027113237639553405
+          ],
+          "usable_replicates": 10000,
+          "undefined_replicates": 0
+        },
+        "delta_balanced_accuracy": {
+          "estimate": -0.0016261659302896543,
+          "ci95": [
+            -0.020066413662239085,
+            0.012708165457964013
+          ],
+          "usable_replicates": 10000,
+          "undefined_replicates": 0
+        }
+      }
+    },
+    "comparison": "V-selected RBF minus training-majority baseline; exploratory classical comparison",
+    "elapsed_seconds": 0.0740852000308223
+  },
+  "execution": {
+    "location": "local_classical",
+    "cloud_submissions": 0,
+    "requested_shots": 0,
+    "elapsed_seconds": 0.24838760000420734,
+    "python": "3.12.14",
+    "versions": {
+      "numpy": "2.3.5",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.7.2",
+      "pandas": "3.0.1"
+    }
+  },
+  "provenance": {
+    "source_summary_sha256": "a9a049ef0a0397e2c6b0d3c8e328fab842f01b429747d72d4e89048b2c1da231",
+    "source_bootstrap_sha256": "e7f8c70c871ce73d2aeb8f4e6058fc3ed4bca7804ebce7c948630deee6a18f41",
+    "analysis_source_sha256": "ed04792c10f8d7e6c5b5f555e2adc08bdd6a8106bac62554b3e499f98c93759b",
+    "csv_sha256": "749de9d285aedaac42dbf38782c2dba62eb6bb0a81b29e4d41154b7389ebdbd0",
+    "privacy": "Aggregate metrics only; no sample identifiers, private paths, predictions, circuits or credentials"
+  },
+  "authorized_plan": {
+    "qubits": 8,
+    "features": 40,
+    "train_rows": 16,
+    "validation_rows": 16,
+    "shots_per_probability_circuit": 512,
+    "seed": 20261110,
+    "quarters_order": [
+      "2024Q1",
+      "2023Q1",
+      "2022Q1"
+    ],
+    "arms_per_quarter": [
+      "qukernet",
+      "random"
+    ],
+    "circuits_upper": 93760,
+    "requested_shots_upper": 48005120,
+    "batches_upper": 4804,
+    "batch_size_upper": 20,
+    "seconds_per_batch_upper": 300,
+    "window_hours_upper": 72,
+    "window_start": "first new main-study reservation",
+    "quantum_backend": "tianyan_sw",
+    "same_mask_control": "Post-validation-selected endpoint compared with its own initialization; each refits SVC",
+    "stop_rule": "Any unknown submission, invalid result, explicit failure or batch not verified in 300 seconds stops all new submissions and automatic polling"
+  }
+}

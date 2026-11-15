@@ -1,0 +1,65 @@
+{
+  "schema": "compact_pilot_status_v1",
+  "observed_utc": "2026-11-14T20:30:09.486554+00:00",
+  "state": "blocked_data_coverage",
+  "new_window_started": false,
+  "new_cloud_circuits": 0,
+  "new_requested_shots": 0,
+  "source_access": "restored",
+  "latest_date": "2026-11-13",
+  "calendar_observed_latest": "2026-11-13",
+  "old_experiment": {
+    "state": "superseded_and_stopped",
+    "validated_batches": 362,
+    "circuits": 6960,
+    "requested_shots": 3563520,
+    "unresolved": 0
+  },
+  "research_results_available": false,
+  "financial_conclusions": "not_evaluated",
+  "notes": [
+    "Frozen selection and coverage evidence saved outside the public course.",
+    "Source data were read only. No missing values were filled, securities replaced or evaluation dates shifted.",
+    "Repair and version-check source evidence before starting the authorized clock. No automatic retry or cloud launch."
+  ],
+  "summary_zh": "已核实行情截止2026年11月13日并冻结50股。50只均缺同一组16个开市日；验证区无特征合格记录，50个预定评价样本有40个历史不足。新云实验未启动。",
+  "offline_checks": {
+    "tests": 98,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 108.85,
+    "kind": "offline_constructed_and_mocked_checks"
+  },
+  "numerical_checks_passed": true,
+  "protocol_sha256": "6c075b03fed1336a040ae4a5b241128309afe0488b09b0229eb603a412e1d7da",
+  "data_audit": {
+    "admission_zh": "未通过；验证候选池0条，预定评价历史合格10条、不合格40条。",
+    "finding_zh": "全源核查后按预定规则从5374只符合验证前资格的证券中抽取50只，含沪市21只、深市26只、北交所3只。50只全部缺相同16个开市日。验证区没有连续121个市场日的有效历史，首先触发验证样本不足；另外40个固定评价样本历史不完整。缺失原因仍需停牌或供应商记录确认。",
+    "directory_visible_csv_files": 5924,
+    "source_files_with_rows_since2019": 5821,
+    "eligible_stocks": 5374,
+    "selected_stocks": 50,
+    "validation_feature_valid_pool_rows": 0,
+    "evaluation_history_failures": 40,
+    "common_missing_market_dates": [
+      "2026-03-26",
+      "2026-03-27",
+      "2026-03-30",
+      "2026-03-31",
+      "2026-04-01",
+      "2026-04-02",
+      "2026-04-03",
+      "2026-04-07",
+      "2026-04-08",
+      "2026-04-09",
+      "2026-04-10",
+      "2026-04-13",
+      "2026-04-14",
+      "2026-04-15",
+      "2026-04-16",
+      "2026-04-17"
+    ],
+    "new_cloud_allowed": false
+  }
+}

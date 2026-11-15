@@ -1,0 +1,5 @@
+﻿split,rows,dates,class_down,class_up,rows_with_any_missing_80,missing_cells_80,missing_rate_80,selected_missing_cells,selected_missing_rate
+train,16,8,9,7,0,0,0.0,0,0.0
+valid,16,8,7,9,0,0,0.0,0,0.0
+test,50,10,28,22,0,0,0.0,0,0.0
+full_train,60079,1493,31486,28593,457,946,0.00019682418149436574,23,4.7853659348524446e-05

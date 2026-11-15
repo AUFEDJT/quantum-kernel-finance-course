@@ -1,0 +1,99 @@
+{
+  "schema": "compact_pilot_data_quality_summary_v1",
+  "latest_date": "2026-11-13",
+  "observed_utc": "2026-11-14T20:30:08.310216+00:00",
+  "directory_visible_csv_files": 5924,
+  "source_files_with_rows_since2019": 5821,
+  "eligible_stocks": 5374,
+  "allocation": {
+    "bj": 3,
+    "sh": 21,
+    "sz": 26
+  },
+  "selected_stocks": 50,
+  "universe_sha256": "2063b8786bfc25d1e5e0ac8c76bab9a4bdd118787be3298b4572882eab3085c0",
+  "calendar_method": "derived from official annual closure notices and amendments; not a vendor index date list",
+  "common_missing_market_dates": [
+    "2026-03-26",
+    "2026-03-27",
+    "2026-03-30",
+    "2026-03-31",
+    "2026-04-01",
+    "2026-04-02",
+    "2026-04-03",
+    "2026-04-07",
+    "2026-04-08",
+    "2026-04-09",
+    "2026-04-10",
+    "2026-04-13",
+    "2026-04-14",
+    "2026-04-15",
+    "2026-04-16",
+    "2026-04-17"
+  ],
+  "common_missing_stock_date_records": 800,
+  "missing_reason": "not independently established; suspension or incomplete source are possible; common index gap supports a source-coverage concern",
+  "validation_feature_valid_pool_rows": 0,
+  "evaluation_history_failures": 40,
+  "evaluation_history_passes": 10,
+  "evaluation_history_by_date": [
+    {
+      "date": "2026-08-06",
+      "assigned": 5,
+      "history_complete": 0
+    },
+    {
+      "date": "2026-08-14",
+      "assigned": 5,
+      "history_complete": 0
+    },
+    {
+      "date": "2026-08-24",
+      "assigned": 5,
+      "history_complete": 0
+    },
+    {
+      "date": "2026-09-02",
+      "assigned": 5,
+      "history_complete": 0
+    },
+    {
+      "date": "2026-09-10",
+      "assigned": 5,
+      "history_complete": 0
+    },
+    {
+      "date": "2026-09-18",
+      "assigned": 5,
+      "history_complete": 0
+    },
+    {
+      "date": "2026-09-29",
+      "assigned": 5,
+      "history_complete": 0
+    },
+    {
+      "date": "2026-10-15",
+      "assigned": 5,
+      "history_complete": 0
+    },
+    {
+      "date": "2026-10-23",
+      "assigned": 5,
+      "history_complete": 5
+    },
+    {
+      "date": "2026-11-02",
+      "assigned": 5,
+      "history_complete": 5
+    }
+  ],
+  "first_stop_code": "fixed_sample_unavailable",
+  "first_stop_phase": "valid",
+  "interpretation": "Observed data quality only; no prediction experiment and no cloud calls. Complete history is necessary but not sufficient for all derived features.",
+  "evidence_sha256": {
+    "preparation_checkpoint_20261114T202641193438Z.json": "8dbd3961f96abfd0c87c0f2c4f7321a70ad11023e04da5e8a501b38fbebf8698",
+    "selected_coverage_20261114T202641193438Z.json": "1d31cfb477b0e4990c8337028688029b69a2d35308ef16c4f3eb8be6547e3bf2",
+    "preparation_blocked_20261114T202714429276Z.json": "edd31201221f6ddb681c8952f3b0628e57c757231e7f09ae7c330b1f0aead88f"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "efficacy_execution_snapshot_v1",
+  "observed_utc": "2026-11-14T16:10:38.094508+00:00",
+  "state": "running",
+  "study_state": "running",
+  "current_arm": {
+    "method": "qukernet",
+    "quarter": "2024Q1",
+    "seed": 20261110
+  },
+  "totals": {
+    "batches": 8,
+    "circuits": 160,
+    "requested_shots": 81920,
+    "validated_batches": 7
+  },
+  "first_reservation_beijing": "2026-11-15T00:05:59.034532+08:00",
+  "deadline_beijing": "2026-11-18T00:05:59.034532+08:00",
+  "window_state": "running",
+  "error_type": null,
+  "workflow_complete": false,
+  "interpretation": "流程或批次完成不代表微调或股票预测有效，需完成预先规定的配对分析。",
+  "backend": "tianyan_sw",
+  "qubits": 8,
+  "shots_per_circuit": 512,
+  "planned_groups": 6,
+  "limits": {
+    "circuits": 93760,
+    "shots": 48005120,
+    "batches": 4804,
+    "hours": 72
+  },
+  "backend_cancelled": false,
+  "cloud_calls_by_snapshot_exporter": 0
+}

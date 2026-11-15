@@ -1,0 +1,116 @@
+{
+  "verified_utc": "2026-11-14T13:50:36.628524+00:00",
+  "execution_location": "TianYan cloud simulators",
+  "retrieval_location": "local Windows; Wuying not required",
+  "new_submissions_this_followup": 0,
+  "new_requested_shots_this_followup": 0,
+  "historical_submissions": 8,
+  "historical_requested_shots": 1024,
+  "validated_returned_rows": 1024,
+  "cases": [
+    {
+      "case": "SW 零态",
+      "backend": "tianyan_sw",
+      "qubits": 4,
+      "shots": 128,
+      "zero_count": 128,
+      "p0_empirical": 1.0,
+      "p0_reference": 1.0,
+      "raw_rows_and_hash_pass": true,
+      "frozen_scalar_test": "not_claimed"
+    },
+    {
+      "case": "SW 指定位翻转",
+      "backend": "tianyan_sw",
+      "qubits": 4,
+      "shots": 128,
+      "zero_count": 0,
+      "p0_empirical": 0.0,
+      "p0_reference": 0.0,
+      "raw_rows_and_hash_pass": true,
+      "frozen_scalar_test": "not_claimed"
+    },
+    {
+      "case": "SW Bell纠缠",
+      "backend": "tianyan_sw",
+      "qubits": 4,
+      "shots": 128,
+      "zero_count": 60,
+      "p0_empirical": 0.46875,
+      "p0_reference": 0.5,
+      "raw_rows_and_hash_pass": true,
+      "frozen_scalar_test": "not_claimed"
+    },
+    {
+      "case": "SW 非平凡重叠核",
+      "backend": "tianyan_sw",
+      "qubits": 4,
+      "shots": 128,
+      "zero_count": 6,
+      "p0_empirical": 0.046875,
+      "p0_reference": 0.05343657149990906,
+      "raw_rows_and_hash_pass": true,
+      "frozen_scalar_test": "not_claimed"
+    },
+    {
+      "case": "SW 连续旋转2层",
+      "backend": "tianyan_sw",
+      "qubits": 4,
+      "shots": 128,
+      "zero_count": 49,
+      "p0_empirical": 0.3828125,
+      "p0_reference": 0.371780868926975,
+      "raw_rows_and_hash_pass": true,
+      "frozen_scalar_test": "not_claimed"
+    },
+    {
+      "case": "SW 连续旋转4层",
+      "backend": "tianyan_sw",
+      "qubits": 4,
+      "shots": 128,
+      "zero_count": 8,
+      "p0_empirical": 0.0625,
+      "p0_reference": 0.1017247834103041,
+      "raw_rows_and_hash_pass": true,
+      "frozen_scalar_test": "not_claimed"
+    },
+    {
+      "case": "SW 连续旋转16层",
+      "backend": "tianyan_sw",
+      "qubits": 4,
+      "shots": 128,
+      "zero_count": 24,
+      "p0_empirical": 0.1875,
+      "p0_reference": 0.14009957426198172,
+      "raw_rows_and_hash_pass": true,
+      "frozen_scalar_test": "not_claimed"
+    },
+    {
+      "case": "TN 连续旋转2层",
+      "backend": "tianyan_tn",
+      "qubits": 4,
+      "shots": 128,
+      "zero_count": 46,
+      "p0_empirical": 0.359375,
+      "p0_reference": 0.371780868926975,
+      "raw_rows_and_hash_pass": true,
+      "frozen_scalar_test": "passed_34_to_62"
+    }
+  ],
+  "tn_ui_timing": {
+    "backend": "天衍-张量网络",
+    "created_local": "2026-11-10 09:21:52",
+    "started_local": "2026-11-11 10:14:58.170",
+    "ended_local": "2026-11-11 10:14:58.792",
+    "reported_execution_seconds": 0.622,
+    "requested_repetitions": 128,
+    "preview_rows": 100,
+    "status": "运行成功"
+  },
+  "limits": [
+    "4-qubit preflight only; stock search has not started",
+    "TN zero-count check is not full-distribution or iid certification",
+    "Probability tables equal empirical histograms, not independent exact probabilities",
+    "Original submission window expired 2026-11-13 01:55:40 Asia/Shanghai"
+  ]
+}

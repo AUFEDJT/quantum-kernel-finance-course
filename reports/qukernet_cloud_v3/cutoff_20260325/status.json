@@ -1,0 +1,163 @@
+{
+  "schema": "qukernet_cutoff_20260325_public_v1",
+  "created_utc": "2026-11-15T03:56:16.857680+00:00",
+  "status": "blocked_protocol_suspension_history",
+  "status_zh": "连续历史规则与已核实停牌冲突，云实验尚未启动",
+  "timeline": {
+    "requested_cutoff": "2026-03-25",
+    "actual_cutoff": "2026-03-25",
+    "qualification_anchor": "2025-09-02",
+    "training_signal_start": "2019-01-02",
+    "training_signal_end": "2025-08-25",
+    "validation_signal_start": "2025-09-03",
+    "validation_signal_end": "2025-11-28",
+    "evaluation_signal_start": "2025-12-09",
+    "evaluation_signal_end": "2026-03-17",
+    "evaluation_dates": [
+      "2025-12-12",
+      "2025-12-22",
+      "2025-12-30",
+      "2026-01-12",
+      "2026-01-20",
+      "2026-01-28",
+      "2026-02-05",
+      "2026-02-24",
+      "2026-03-04",
+      "2026-03-12"
+    ]
+  },
+  "data": {
+    "admitted": false,
+    "reason_code": "frozen_outer_coverage_invalid",
+    "reason_zh": "固定五十条评价记录未全部通过准入",
+    "source_files": null,
+    "source_securities": 5710,
+    "eligible_securities": 5365,
+    "selected_stocks": 50,
+    "calendar_dates": 1751,
+    "selected_source_rows": null,
+    "full_train_rows": null,
+    "train_rows": null,
+    "valid_rows": null,
+    "test_rows": null,
+    "train_pool_rows": 58103,
+    "valid_pool_rows": 2578,
+    "evaluation_history_pass": 47,
+    "evaluation_all_conditions_pass": 47,
+    "evaluation_feature_invalid": 3,
+    "evaluation_target_invalid": 0,
+    "missing_stock_dates": null,
+    "invalid_stock_dates": null,
+    "selected_feature_count": null,
+    "train_sample_pass": 16,
+    "valid_sample_pass": 16,
+    "evaluation_missing_history_stock_dates": 10,
+    "evaluation_invalid_history_stock_dates": 0,
+    "full_train_pool_rows": 58039,
+    "model_fits": 0,
+    "phase": "feature_and_sample_preparation",
+    "fitted_preprocessing": false,
+    "sample_class_counts": {
+      "train": [
+        9,
+        7
+      ],
+      "valid": [
+        7,
+        9
+      ]
+    },
+    "exchange_counts": {
+      "sh": 21,
+      "sz": 27,
+      "bj": 2
+    },
+    "verified_cause": "documented_trading_suspensions"
+  },
+  "execution": {
+    "new_window_started": false,
+    "new_cloud_circuits": 0,
+    "new_requested_shots": 0,
+    "new_batches": 0,
+    "validated_circuits": 0,
+    "validated_batches": 0,
+    "unresolved_tasks": 0,
+    "failed_circuits": 0,
+    "elapsed_seconds": 0.0,
+    "started_utc": null,
+    "deadline_utc": null,
+    "last_observed_utc": null,
+    "stop_reason": "data_admission_not_passed"
+  },
+  "checks": {
+    "tests": 112,
+    "failures": 0,
+    "errors": 0,
+    "probability_max_abs_error": 4.3298697960381105e-15,
+    "gradient_max_abs_error": 3.053113872830693e-10,
+    "kta_gradient_max_abs_error": 1.5265566724854498e-10,
+    "reload_kernel_max_abs_error": 0.0,
+    "remote_tests": 112,
+    "remote_failures": 0,
+    "remote_errors": 0,
+    "scope": "本轮112项本地离线测试；量子数学实现未改，解析数值核查复用此前保存记录，未重跑云端",
+    "numeric_evidence_reused": true,
+    "numeric_evidence_completed_utc": "2026-11-14T20:23:49.332101+00:00"
+  },
+  "results": [],
+  "planned_budget": [
+    {
+      "component": "QuKerNet及初值评价",
+      "planned_circuits": 3044,
+      "planned_requested_shots": 1558528
+    },
+    {
+      "component": "随机搜索",
+      "planned_circuits": 2244,
+      "planned_requested_shots": 1148928
+    },
+    {
+      "component": "解析预检",
+      "planned_circuits": 4,
+      "planned_requested_shots": 2048
+    }
+  ],
+  "planned_total_circuits": 5292,
+  "planned_total_requested_shots": 2709504,
+  "planned_max_batches": 271,
+  "planned_window_hours": 3,
+  "nominal_kernel_train": 16,
+  "nominal_validation": 16,
+  "nominal_evaluation": 50,
+  "seed": 20261115,
+  "result_scope": "historical raw-price classification pilot; not net strategy returns or quantum advantage",
+  "suspension_sources": [
+    {
+      "security": "600360",
+      "announcement": "2025-064",
+      "locator": "第1页及第3页",
+      "finding": "2025年8月13日起停牌 8月19日复牌",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-08-19/1224503642.PDF"
+    },
+    {
+      "security": "300125",
+      "announcement": "2025-131",
+      "locator": "第1页",
+      "finding": "2025年12月26日停牌1日 12月29日复牌",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-12-26/1224897761.PDF"
+    },
+    {
+      "security": "301181",
+      "announcement": "2025-067",
+      "locator": "第1页及第2页",
+      "finding": "2025年10月31日起停牌 11月4日续停 11月7日复牌",
+      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2025-11-07/746ef9be-a218-43f4-b176-c9436dbd1dc5.PDF"
+    }
+  ],
+  "evidence_hashes": {
+    "source_manifest": "a4baf61a8865d85e23b4160d00c6a8dc85915ac8dcbf838ec8cf250a3c3d376d",
+    "code": "71b7203ac9e57d604937387bd23ce17a850afea3108d49bfb4262a1a74b89496",
+    "protocol": "c34ca5cb56e97d45ae30045784f99385dad2eb8715830efa3751ebd34cc90e17",
+    "tests": "34f3f8826219b1cd4b228608d2d65e242a6491392f3a3f98d17c23aab30daf95"
+  }
+}

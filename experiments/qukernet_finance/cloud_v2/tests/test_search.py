@@ -70,6 +70,23 @@ class SearchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "public course/code"):
             s.Checkpoints(s.HERE.parents[2], {"test": "output_guard"})
 
+    def test_versioned_code_root_ancestors_and_descendants_are_protected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            code = root / "code_efficacy_test"
+            source = code / "qukernet_finance/cloud_v2/search.py"
+            source.parent.mkdir(parents=True)
+            with patch.object(s, "HERE", source):
+                for candidate in (root, code, code / "qukernet_finance", code / "new_results"):
+                    with self.subTest(candidate=candidate):
+                        with self.assertRaisesRegex(ValueError, "public course/code"):
+                            s.Checkpoints(candidate, {"test": "versioned_output_guard"})
+                private = root / "private/results"
+                s.Checkpoints(private, {"test": "private_output_allowed"})
+                self.assertTrue((private / "identity.json").exists())
+            self.assertFalse((code / "identity.json").exists())
+            self.assertFalse((root / "identity.json").exists())
+
     def test_gradient_both_overlap_ends_and_normalized_kta(self):
         layout = {"qubits": 2, "features": 3, "depth": 2,
                   "blocks": [{"axes": ["RY", "RX"], "entanglers": [1]},

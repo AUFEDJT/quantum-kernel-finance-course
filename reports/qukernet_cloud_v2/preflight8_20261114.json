@@ -1,0 +1,44 @@
+{
+  "schema": "public_preflight8_20261114_v1",
+  "state": "validated",
+  "backend": "tianyan_sw",
+  "execution_location": "TianYan cloud simulator; Wuying submission and validation",
+  "new_circuits": 12,
+  "qubits": 8,
+  "shots_per_circuit": 128,
+  "new_requested_shots": 1536,
+  "returned_validated_shot_rows": 1536,
+  "cumulative_course_ledger_circuits": 20,
+  "cumulative_course_ledger_requested_shots": 2560,
+  "started_beijing": "2026-11-14T22:59:12.204368+08:00",
+  "closed_beijing": "2026-11-14T22:59:31.802272+08:00",
+  "outer_deadline_beijing": "2026-11-17T22:59:12.204368+08:00",
+  "window_state": "closed",
+  "reservation_to_validation_seconds": 19.597903728485107,
+  "adapter_seconds_including_backend_check": 19.721970941999643,
+  "server_compute_seconds": null,
+  "server_memory_bytes": null,
+  "query_count": 3,
+  "all_raw_structure_checks_passed": true,
+  "all_frozen_intervals_passed": true,
+  "sampling_independence_certified": false,
+  "gradients": [
+    {
+      "parameter": 0,
+      "empirical_derivative": 0.06640625,
+      "reference_derivative": 0.05084990278613846,
+      "iid_binomial_reference_se": 0.04232656418103549
+    },
+    {
+      "parameter": 1,
+      "empirical_derivative": 0.01171875,
+      "reference_derivative": -0.04134160971511475,
+      "iid_binomial_reference_se": 0.04245381349193209
+    }
+  ],
+  "stock_search_started": false,
+  "automatic_submissions_remaining": 0,
+  "automatic_polling_after_stop": false,
+  "source_archive_sha256": "4543389a6816ba231a76a12cfd17649f67e6b7093b156b3f559d5a4bea6f3122",
+  "source_request_sha256": "bb9d2e0f63daa3f9e170b5aa5f081529d33d768f40c458e49c2be8aa4d924525"
+}

@@ -1,0 +1,10 @@
+﻿method,checkpoint,split,rows,columns,status,frobenius,relative_frobenius,raw_frobenius,retained_rank,negative_eigenvalues,source,reason
+qukernet,initial,training,16,16,complete,4.82558330407472e-15,,,16,0,saved_training_spectral_mapping,
+qukernet,endpoint,training,16,16,complete,6.492711767249493e-15,,,16,0,saved_training_spectral_mapping,
+random,initial,training,16,16,complete,6.492393932863549e-15,,,16,0,saved_training_spectral_mapping,
+random,endpoint,training,16,16,complete,6.038326846454278e-15,,,16,0,saved_training_spectral_mapping,
+qukernet,endpoint,validation,16,16,complete,1.3262145273256044e-15,1.1230284167368257e-15,1.1809269539048486,16,,posthoc_saved_cloud_cross_kernel,
+random,endpoint,validation,16,16,complete,8.827064057034232e-16,8.685932367176692e-16,1.0162483063293082,16,,posthoc_saved_cloud_cross_kernel,
+qukernet,endpoint,evaluation,50,16,complete,2.321542111168216e-15,1.0912295874825185e-15,2.127455246630588,16,,posthoc_saved_cloud_cross_kernel,
+random,endpoint,evaluation,50,16,complete,1.2442594123276818e-15,8.794075485550606e-16,1.4148837070731346,16,,posthoc_saved_cloud_cross_kernel,
+qukernet,initial,evaluation,50,16,complete,1.9923950663756e-15,9.153748116676974e-16,2.176589350045265,16,,posthoc_saved_cloud_cross_kernel,

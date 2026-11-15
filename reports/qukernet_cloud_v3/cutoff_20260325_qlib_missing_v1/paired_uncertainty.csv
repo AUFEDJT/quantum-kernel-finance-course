@@ -1,0 +1,10 @@
+﻿comparison,block_length,role,estimate,ci_low,ci_high,dates,rows,repetitions,seed
+qukernet_endpoint_minus_same_initial,2,primary,0.0,0.0,0.0,10,50,10000,20261115
+qukernet_endpoint_minus_same_initial,1,sensitivity,0.0,0.0,0.0,10,50,10000,20261115
+qukernet_endpoint_minus_same_initial,3,sensitivity,0.0,0.0,0.0,10,50,10000,20261115
+qukernet_endpoint_minus_random_endpoint,2,primary,-0.02,-0.08,0.06000000000000001,10,50,10000,20261115
+qukernet_endpoint_minus_random_endpoint,1,sensitivity,-0.02,-0.08,0.04,10,50,10000,20261115
+qukernet_endpoint_minus_random_endpoint,3,sensitivity,-0.02,-0.06000000000000001,0.06000000000000001,10,50,10000,20261115
+qukernet_endpoint_minus_rbf,2,primary,-0.019999999999999997,-0.14,0.16,10,50,10000,20261115
+qukernet_endpoint_minus_rbf,1,sensitivity,-0.019999999999999997,-0.22000000000000003,0.18,10,50,10000,20261115
+qukernet_endpoint_minus_rbf,3,sensitivity,-0.019999999999999997,-0.2,0.10000000000000002,10,50,10000,20261115

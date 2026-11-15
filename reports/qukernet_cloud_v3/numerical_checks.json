@@ -1,0 +1,102 @@
+{
+  "schema": "compact_pilot_v3_numerical_checks",
+  "execution_location": "local_cpu",
+  "completed_utc": "2026-11-14T20:23:49.332101+00:00",
+  "execution_kind": "analytic_constructed_fixture",
+  "cloud_submissions": 0,
+  "actual_cloud_shots": 0,
+  "financial_data_used": false,
+  "source_sha256": {
+    "numerical_checks.py": "a2c838fc2a240dc13f81fe3198354b01c584dccf0fcb7e1f13698d417887d074",
+    "study.py": "af15c461042a2bdaf87cb3ddcfef5f722b9bdfb7d1b77fc8415bea60b41f4199",
+    "circuits.py": "02bf2224dfadc1cc59a501cb37c01fdf428d32bc68d6f9c6e69a1afd34cab6c9",
+    "search.py": "8da91424c8a0ebdb4a7237c0c32bf8cd5aed8d7b90f4eb3162c412934bc3138b"
+  },
+  "tolerances": {
+    "state_and_probability_absolute": 1e-10,
+    "central_difference_gradient_absolute": 1e-07,
+    "kta_definition_absolute": 1e-12,
+    "reload_kernel_absolute": 0
+  },
+  "cases": [
+    {
+      "qubits": 3,
+      "features": 3,
+      "depth": 2,
+      "pairs": 6,
+      "physical_occurrences_per_parameter": [
+        2,
+        2
+      ],
+      "max_state_error_internal_vs_qcis": 1.4475537224895361e-15,
+      "max_probability_error_inner_product_vs_qcis": 2.55351295663786e-15,
+      "max_probability_derivative_error_shift_vs_central_fd": 2.212809380175429e-10,
+      "kta_manual_definition_error": 0.0,
+      "kta_chain_gradient_max_error_vs_central_fd": 3.122512790022235e-11,
+      "parameter_serialization_kernel_error": 0.0,
+      "qcis_hash_matches_reload": true,
+      "finite_difference_epsilon": 1e-06,
+      "analytic_kta_before": 0.06240847934573603,
+      "analytic_kta_after_small_ascent_step": 0.06240849275165782,
+      "kta_gradient_l2_norm": 0.011578377624888952,
+      "depth_one_shared_parameter_invariance_expected": false,
+      "ascent_step_for_check_only": 0.0001,
+      "passed": true
+    },
+    {
+      "qubits": 8,
+      "features": 8,
+      "depth": 1,
+      "pairs": 6,
+      "physical_occurrences_per_parameter": [
+        2,
+        2
+      ],
+      "max_state_error_internal_vs_qcis": 2.198129442157285e-15,
+      "max_probability_error_inner_product_vs_qcis": 4.3298697960381105e-15,
+      "max_probability_derivative_error_shift_vs_central_fd": 3.053113872830693e-10,
+      "kta_manual_definition_error": 0.0,
+      "kta_chain_gradient_max_error_vs_central_fd": 1.5265566724854498e-10,
+      "parameter_serialization_kernel_error": 0.0,
+      "qcis_hash_matches_reload": true,
+      "finite_difference_epsilon": 1e-06,
+      "analytic_kta_before": 0.2135287100846099,
+      "analytic_kta_after_small_ascent_step": 0.2135287100846099,
+      "kta_gradient_l2_norm": 2.3515331831637352e-17,
+      "depth_one_shared_parameter_invariance_expected": true,
+      "ascent_step_for_check_only": 0.0001,
+      "passed": true
+    },
+    {
+      "qubits": 8,
+      "features": 8,
+      "depth": 3,
+      "pairs": 6,
+      "physical_occurrences_per_parameter": [
+        2,
+        2
+      ],
+      "max_state_error_internal_vs_qcis": 2.9026812296057035e-15,
+      "max_probability_error_inner_product_vs_qcis": 1.0547118733938987e-15,
+      "max_probability_derivative_error_shift_vs_central_fd": 2.775558949341672e-11,
+      "kta_manual_definition_error": 0.0,
+      "kta_chain_gradient_max_error_vs_central_fd": 2.8410069435880203e-11,
+      "parameter_serialization_kernel_error": 0.0,
+      "qcis_hash_matches_reload": true,
+      "finite_difference_epsilon": 1e-06,
+      "analytic_kta_before": 0.46585547766815444,
+      "analytic_kta_after_small_ascent_step": 0.46585548594983933,
+      "kta_gradient_l2_norm": 0.009100377090132655,
+      "depth_one_shared_parameter_invariance_expected": false,
+      "ascent_step_for_check_only": 0.0001,
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "limitations": [
+    "Analytic fixtures only; not financial prediction or finite-shot convergence evidence",
+    "Small ascent step validates gradient direction, not the registered 0.2 learning rate effectiveness",
+    "Single feature block at depth one has exact shared-parameter cancellation; finite-shot nonzero gradients can be sampling noise",
+    "No platform output, hardware noise or runtime capacity was checked"
+  ]
+}

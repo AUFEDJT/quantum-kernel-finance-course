@@ -1,0 +1,40 @@
+{
+  "schema": "qlib_missing_v1_teaching_environment",
+  "created_utc": "2026-11-15T08:02:55.593712+00:00",
+  "python": "3.12.14",
+  "os": "Windows",
+  "architecture": "",
+  "new_venv": true,
+  "system_site_packages": false,
+  "installation": "Official PyPI over verified HTTPS with ordinary pip cache reuse",
+  "torch_installed": false,
+  "cqlib_installed": false,
+  "notebooks": [
+    {
+      "file": "03_停牌与缺失处理.ipynb",
+      "code_cells": 4,
+      "errors": 0,
+      "seconds": 2.5619999999762513,
+      "source_sha256": "a58dc29ef4a286e34ba5972aa2295736846d3882ca2eaeb395f198faf22ac114"
+    },
+    {
+      "file": "04_完整链条解析演示.ipynb",
+      "code_cells": 5,
+      "errors": 0,
+      "seconds": 5.64000000001397,
+      "source_sha256": "68f9e32b6c93aea0a9334854783e71ba3a96164f67685d30ab185f9cd1591169"
+    },
+    {
+      "file": "05_真实结果与预算.ipynb",
+      "code_cells": 5,
+      "errors": 0,
+      "seconds": 3.6570000000065193,
+      "source_sha256": "5533f2f0200d839fd0e3062a0e573c98eca3e6974b60d4d7d23ddce45e02b41c"
+    }
+  ],
+  "total_code_cells": 14,
+  "cloud_calls": 0,
+  "financial_data_reads": 0,
+  "public_outputs_saved": false,
+  "scope": "Analytic teaching and saved aggregate reading; not a complete cloud research environment"
+}

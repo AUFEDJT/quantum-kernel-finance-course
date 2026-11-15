@@ -1,0 +1,3 @@
+﻿stage,circuits,requested_shots,batches,completed_circuits,returned_reads,validated_requested_reads,failed_attempts,elapsed_seconds
+parent,2952,1511424,154,2952,1511424,1511424,0,
+continuation,2340,1198080,117,2340,1198080,1198080,0,

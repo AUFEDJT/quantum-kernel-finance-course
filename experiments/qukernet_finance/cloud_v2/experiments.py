@@ -56,7 +56,8 @@ def dry_run(stage, n_test, repetitions=1):
     config = profile(stage)
     cost = circuits.budget_estimate(config["n_train"], config["n_valid"], n_test, config["labels"],
         config["top_k"], config["configurations"], config["steps"], config["batch_size"],
-        config["max_parameters"], config["shots"], repetitions)
+        config["max_parameters"], config["shots"], repetitions,
+        paired_initialization_control=config.get("paired_initialization_control", False))
     return {"status": "not_run", "cloud_submissions": 0, "profile": config,
             "n_test": n_test, "budget_upper_bound": cost,
             "notes": ["Counts are one method arm and task per market window, not the entire experiment matrix.",

@@ -1,0 +1,4 @@
+﻿record,location,evidence_kind,circuits,requested_shots,state,interpretation
+superseded_study,TianYan cloud,observed ledger,6960,3563520,closed_superseded,Historical partial work; excluded from new comparison
+numerical_consistency,local CPU,analytic construction,,0,passed,Implementation consistency only; no market efficacy inference
+new_cloud_pilot,TianYan cloud,execution status,0,0,blocked_data_coverage,No financial result until a frozen eligible dataset and actual run exist

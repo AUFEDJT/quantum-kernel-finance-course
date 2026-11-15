@@ -12,7 +12,7 @@ in Quantum Information and Quantum Physics. Changes: no retries, exact HTTPS
 destination, request wall deadline, durable reservation and raw validation.
 """
 from collections import Counter
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 import hashlib
 import importlib.metadata
 import json
@@ -253,7 +253,8 @@ def validate_raw_result(item, job_id, spec, shots):
 
 class TianyanCloudAdapter:
     def __init__(self, transport, ledger, evidence=None, backend=BACKEND,
-                 observation_seconds=300.0, poll_seconds=5.0, sleep=time.sleep, monotonic=time.monotonic):
+                 observation_seconds=300.0, poll_seconds=5.0, sleep=time.sleep, monotonic=time.monotonic,
+                 execution_window_id=None, result_validator=None, execution_protocol_sha256=None):
         if not isinstance(ledger, PersistentLedger): raise PreflightBlocked("Persistent account ledger is required")
         if not isinstance(transport, Cqlib1311Transport) and getattr(transport, "is_mock", False) is not True:
             raise PreflightBlocked("Only reviewed Cqlib transport or explicitly labelled offline mock is accepted")
@@ -266,6 +267,17 @@ class TianyanCloudAdapter:
         self.observation_seconds, self.poll_seconds = observation_seconds, poll_seconds
         self.poll_delays = (poll_seconds, poll_seconds * 2, poll_seconds * 3)
         self.sleep, self.monotonic = sleep, monotonic
+        if result_validator is not None and not callable(result_validator):
+            raise PreflightBlocked("Result validator must be callable")
+        window = ledger.window(execution_window_id) if execution_window_id is not None else None
+        self.main_window = window is not None and window.get("kind") == "main_protocol_v1"
+        if self.main_window and (execution_protocol_sha256 != window["protocol_sha256"]
+                                 or backend != window["policy"]["backend"]):
+            raise PreflightBlocked("Main provider must bind the authorized protocol SHA256 and backend")
+        if execution_window_id is not None and not self.main_window and result_validator is None:
+            raise PreflightBlocked("Authorized preflight window requires frozen statistical acceptance")
+        self.execution_window_id, self.result_validator = execution_window_id, result_validator
+        self.execution_protocol_sha256 = execution_protocol_sha256
 
     def execution_identity(self):
         """Non-secret identity for matrix/checkpoint binding; never includes tokens."""
@@ -275,6 +287,8 @@ class TianyanCloudAdapter:
                 "is_mock": getattr(self.transport, "is_mock", False) is True,
                 "account_scope_sha256": self.ledger.account_hash,
                 "canonical_ledger_path_sha256": hashlib.sha256(str(self.ledger.path.resolve()).encode()).hexdigest(),
+                "execution_window_id": self.execution_window_id,
+                "execution_protocol_sha256": self.execution_protocol_sha256,
                 "client_code_sha256": {name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
                                        for name in ("cloud.py", "ledger.py", "preflight.py")}}
 
@@ -283,11 +297,29 @@ class TianyanCloudAdapter:
         return f(value)
 
     def probability(self, specs, shots, phase="main", context=None, deadline=None):
+        """Run one reserved batch; any main-protocol error closes further execution.
+
+        The main protocol supplies a stable context['operation_id'] independent
+        of process, source revision and observation time. Reusing that ID cannot
+        resubmit a changed or previously reserved operation, even in a new window.
+        """
+        try:
+            return self._probability(specs, shots, phase, context, deadline)
+        except BaseException as exc:
+            if self.main_window:
+                self.ledger.close_main_window(self.execution_window_id, "client_stopped",
+                    "Batch failed or blocked: " + type(exc).__name__ + "; no automatic query or new submission")
+            raise
+
+    def _probability(self, specs, shots, phase="main", context=None, deadline=None):
         if not isinstance(specs, list) or not 1 <= len(specs) <= 20:
             raise PreflightBlocked("Each explicit batch must contain 1..20 circuits; empty batches are errors")
         if type(shots) is not int or shots <= 0: raise PreflightBlocked("Shots must be a positive integer")
         if context is not None and not isinstance(context, dict): raise PreflightBlocked("Context must be a dictionary")
         context = self._safe(context or {})
+        if self.main_window and (not isinstance(context.get("operation_id"), str)
+                                 or not context["operation_id"].strip()):
+            raise PreflightBlocked("Main batches require a stable logical operation_id")
         if "phase" in context:
             if phase != "main" and phase != context["phase"]: raise PreflightBlocked("Conflicting phase declarations")
             phase = context["phase"]
@@ -309,31 +341,48 @@ class TianyanCloudAdapter:
             parser_checks = (self.transport.validate_offline(canonical)
                              if isinstance(self.transport, Cqlib1311Transport)
                              else [{"status": "offline_mock_only_no_sdk_parser"}])
-            snapshot = self.ledger.snapshot()
-            remaining = snapshot["deadline_epoch"] - self.ledger.clock()
-            end = min(self.monotonic() + min(self.observation_seconds, remaining),
-                      float("inf") if deadline is None else deadline)
-            if self.monotonic() >= end: raise PreflightBlocked("No time remains to start a bounded cloud observation")
+            selected_deadline = self.ledger.effective_deadline(self.execution_window_id)
+            remaining = float("inf") if selected_deadline is None else selected_deadline - self.ledger.clock()
+            # Live resource reads precede reservation and are separately bounded.
+            # A fresh window's 300-second clock starts only at durable reservation.
+            preflight_end = min(self.monotonic() + min(60.0, remaining),
+                                float("inf") if deadline is None else deadline)
+            if self.monotonic() >= preflight_end:
+                raise PreflightBlocked("No time remains for the read-only backend check")
             fingerprint = digest({"circuits": [(s["id"], s["sha256"]) for s in canonical],
                                   "shots": shots, "backend": self.backend, "phase": phase, "context": context})
             # Re-read before EVERY submission, under the account execution lock.
             # This does not replace the separately required zero-hardware-quota proof.
             live = inspect_current_backend(self.transport, backend=self.backend,
                 account_scope_sha256=self.ledger.account_hash, read_only_authorized=True,
-                deadline=end, output_root=self.ledger.root / "backend_checks")
+                deadline=preflight_end, output_root=self.ledger.root / "backend_checks")
             if not live["running_and_free"]:
                 raise PreflightBlocked("Current backend free/running check failed; no submission reserved or sent")
-            if self.monotonic() >= end:
-                raise PreflightBlocked("Observation deadline exhausted by the read-only backend check")
+            if self.monotonic() >= preflight_end:
+                raise PreflightBlocked("Read-only backend check exceeded its separate deadline")
             # Proof may expire during a slow read; recheck before reserving work.
             validate_evidence(self.evidence, self.ledger.account_hash, self.backend,
                 now=self.ledger.clock(), mock=getattr(self.transport, "is_mock", False) is True,
                 ledger_path_hash=self.execution_identity()["canonical_ledger_path_sha256"])
+            reservation_monotonic = self.monotonic()
             record = self.ledger.reserve(len(canonical), shots, phase, fingerprint,
                 {"backend": self.backend, "interface": INTERFACE, "circuits": [
                     {k: v for k, v in s.items() if k != "qcis"} for s in canonical],
                  "context": context, "fee_evidence_sha256": digest(self.evidence),
-                 "live_backend_check": live})
+                 "protocol_sha256": self.execution_protocol_sha256,
+                 "live_backend_check": live}, window_id=self.execution_window_id)
+            if self.execution_window_id is not None:
+                persisted_remaining = record["observation_deadline_epoch"] - self.ledger.clock()
+                end = min(reservation_monotonic + min(300.0, self.observation_seconds),
+                          self.monotonic() + persisted_remaining,
+                          float("inf") if deadline is None else deadline)
+                if self.main_window:
+                    end = min(end, self.monotonic() + self.ledger.effective_deadline(
+                        self.execution_window_id) - self.ledger.clock())
+            else:
+                end = min(reservation_monotonic + self.observation_seconds,
+                          self.monotonic() + self.ledger.effective_deadline() - self.ledger.clock(),
+                          float("inf") if deadline is None else deadline)
             aid = record["attempt_id"]
             folder = self.ledger.root / aid
             folder.mkdir()
@@ -345,6 +394,8 @@ class TianyanCloudAdapter:
                 atomic_json(folder / "submission_outcome.json", {"returned_ids": self._safe(ids),
                     "response": self._safe(getattr(self.transport, "last_submission_response", None))})
             try:
+                if self.monotonic() >= end:
+                    raise TimeoutError("Reservation or intent persistence exhausted the observation deadline")
                 ids = self.transport.submit(canonical, shots, self.backend, aid, end)
                 save_submission_outcome()
                 if (not isinstance(ids, list) or len(ids) != len(canonical)
@@ -367,7 +418,29 @@ class TianyanCloudAdapter:
                 if isinstance(exc, (KeyboardInterrupt, SystemExit)): raise
                 raise UnknownSubmission("Submission outcome unknown; account ledger blocks new submissions") from None
             try:
-                out = self._poll(ids, canonical, shots, end, folder, aid)
+                bound = (_hard_request_deadline(end)
+                         if isinstance(self.transport, Cqlib1311Transport) else nullcontext())
+                with bound:
+                    out = self._poll(ids, canonical, shots, end, folder, aid)
+                if self.monotonic() >= end:
+                    raise TimeoutError("No time remains for frozen statistical acceptance")
+                if self.result_validator is not None:
+                    try:
+                        # Bound custom acceptance code as strictly as HTTP calls.
+                        # Offline tests use a virtual clock, not a process alarm.
+                        bound = (_hard_request_deadline(end)
+                                 if isinstance(self.transport, Cqlib1311Transport) else nullcontext())
+                        with bound:
+                            self.result_validator(out)
+                    except (TimeoutError, KeyboardInterrupt, SystemExit):
+                        raise
+                    except Exception as exc:
+                        raise InvalidResult("Frozen statistical acceptance failed") from exc
+                if self.monotonic() >= end:
+                    raise TimeoutError("Statistical acceptance exceeded observation deadline")
+                atomic_json(folder / "validated_results.json", out)
+                if self.monotonic() >= end:
+                    raise TimeoutError("Result persistence exceeded observation deadline")
             except TerminalFailure:
                 self.ledger.update(aid, "terminal_failure", reason="explicit_server_task_failure")
                 raise
@@ -379,7 +452,6 @@ class TianyanCloudAdapter:
                     reason="Observation ended without validated completion; backend may continue; no retry")
                 if isinstance(exc, (KeyboardInterrupt, SystemExit)): raise
                 raise UnknownSubmission("Observation ended; backend status unknown; new submissions blocked") from None
-            atomic_json(folder / "validated_results.json", out)
             self.ledger.update(aid, "validated", evidence_file=str(folder / "validated_results.json"))
             return out
 
@@ -454,7 +526,8 @@ class TianyanCloudAdapter:
 
 
 def create_provider(*, platform, account_ledger_root, account_scope, evidence,
-                    backend=BACKEND, observation_seconds=300.0, poll_seconds=5.0):
+                    backend=BACKEND, observation_seconds=300.0, poll_seconds=5.0,
+                    execution_window_id=None, result_validator=None, execution_protocol_sha256=None):
     """Production factory. Caller injects existing authentication, never a key file.
 
     Fee evidence is checked before SDK inspection, directory creation or network.
@@ -468,4 +541,6 @@ def create_provider(*, platform, account_ledger_root, account_scope, evidence,
     transport = Cqlib1311Transport(platform)
     ledger = PersistentLedger(account_ledger_root, account_scope)
     return TianyanCloudAdapter(transport, ledger, evidence, backend,
-                              observation_seconds=observation_seconds, poll_seconds=poll_seconds)
+                              observation_seconds=observation_seconds, poll_seconds=poll_seconds,
+                              execution_window_id=execution_window_id, result_validator=result_validator,
+                              execution_protocol_sha256=execution_protocol_sha256)

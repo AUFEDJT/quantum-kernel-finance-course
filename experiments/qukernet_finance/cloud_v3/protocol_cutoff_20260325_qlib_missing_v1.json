@@ -1,0 +1,209 @@
+{
+  "schema": "compact_pilot_v3",
+  "protocol_id": "qukernet-50stocks-3h-cutoff20260325-qlib-missing-v1",
+  "seed": 20261115,
+  "backend": "tianyan_sw",
+  "sdk": "cqlib==1.3.11",
+  "purpose": "Small method pilot, not proof of profitable prediction or quantum advantage",
+  "data": {
+    "start": "2019-01-01",
+    "latest_date": "2026-03-25",
+    "stocks": 50,
+    "universe_asof": "before_validation_start",
+    "selection": "exchange_proportional_largest_remainder_seeded_random",
+    "replace_missing_selected_stock": false,
+    "label": "open[j+6]/open[j+1]-1 > 0",
+    "evaluation_market_days": 63,
+    "validation_market_days_before_purge": 63,
+    "purge": "label_end strictly before next split start",
+    "feature_candidates": 80,
+    "selected_features": 8,
+    "feature_fit_scope": "all_eligible_training_history_only",
+    "minimum_feature_history_market_days": 121,
+    "kernel_train_rows": 16,
+    "validation_rows": 16,
+    "evaluation_rows": 50,
+    "evaluation_dates": 10,
+    "evaluation_rows_per_date": 5,
+    "evaluation_date_offsets": [
+      3,
+      9,
+      15,
+      22,
+      28,
+      34,
+      40,
+      47,
+      53,
+      59
+    ],
+    "evaluation_stock_assignment": "seeded_permutation_then_ten_disjoint_groups_of_five",
+    "missing_fixed_row": "block_cloud_launch_without_replacement",
+    "prior_2025_seal": "replaced_by_this_protocol_temporal_split",
+    "cutoff_date": "2026-03-25",
+    "cutoff_policy": "actual observed D must equal cutoff; no fallback",
+    "selection_rebuilt_for_cutoff": false,
+    "source_identity": "full source-file identity plus independent used-interval hash",
+    "fixed_dates": {
+      "qualification_anchor": "2025-09-02",
+      "train_signal_start": "2019-01-02",
+      "train_signal_end": "2025-08-25",
+      "validation_signal_start": "2025-09-03",
+      "validation_signal_end": "2025-11-28",
+      "evaluation_signal_start": "2025-12-09",
+      "evaluation_signal_end": "2026-03-17",
+      "evaluation_dates": [
+        "2025-12-12",
+        "2025-12-22",
+        "2025-12-30",
+        "2026-01-12",
+        "2026-01-20",
+        "2026-01-28",
+        "2026-02-05",
+        "2026-02-24",
+        "2026-03-04",
+        "2026-03-12"
+      ]
+    },
+    "schema": "cloud_v3_qlib_missing_data_v1",
+    "sampling": "Freeze original cutoff-version sixteen train and sixteen validation keys; never reselect under relaxed row eligibility",
+    "feature_history": "121 market-session span since first valid source observation; individual suspended days may be absent",
+    "missing_policy": {
+      "id": "qlib_calendar_missing_train_median_v1",
+      "raw_bars": "unchanged; invalid/missing OHLCV stays NaN; no synthetic trades",
+      "reference_clock": "fixed market calendar; shift/ref never compress suspended sessions",
+      "ordinary_rolling": {
+        "min_periods": 1,
+        "all_missing": "NaN",
+        "sum_all_missing": "NaN"
+      },
+      "std_variance": {
+        "minimum_observations": 2,
+        "ddof": 1
+      },
+      "correlation": {
+        "minimum_paired_observations": 2,
+        "constant_paired_series": "NaN",
+        "support": "pairwise_complete"
+      },
+      "slope_r2": {
+        "minimum_observations": 2,
+        "x_coordinates": "original market positions within window",
+        "zero_response_variance_r2": "NaN"
+      },
+      "empirical_moments": {
+        "minimum_observations": 2,
+        "zero_second_moment": "NaN",
+        "kind": "declared empirical central moments, not pandas unbiased estimators"
+      },
+      "maximum_drawdown": {
+        "minimum_observations": 1,
+        "singleton": 0,
+        "path": "observed closes in fixed calendar window"
+      },
+      "weighted_statistics": "common finite value/weight support for numerator and denominator; nonpositive denominator -> NaN",
+      "illiquidity": {
+        "minimum_positive_volume_coverage": 0.8,
+        "full_window_presence_required": false
+      },
+      "boolean_proportions": "mask missing primitive observations before converting comparisons to numbers",
+      "labels": "never filled; actual open endpoints required",
+      "model_features": "full-T finite median -> exclude all-missing/constant/zero-IQR/exactduplicate -> mRMR8 -> full-T robust angle scaler; apply only on V/O",
+      "missing_indicators": "audit arrays only; not additional model dimensions",
+      "unrecognized_gaps": "remain NaN; no unverified classification as suspensions",
+      "position_execution": "out of scope: prediction diagnostic only"
+    }
+  },
+  "model": {
+    "qubits": 8,
+    "depths": [
+      1,
+      2,
+      3
+    ],
+    "task": "classification",
+    "svc_C": 1.0,
+    "kta": "author_same_class_plus_one_other_class_minus_one_uncentered",
+    "qukernet_label_layouts": 6,
+    "predictor_training_layouts": 4,
+    "predictor_diagnostic_layouts": 2,
+    "new_candidates": 256,
+    "random_label_layouts": 7,
+    "shortlist": 1,
+    "configs": 1,
+    "replacement_parameters": 2,
+    "steps": 2,
+    "batch_rows": 4,
+    "batch_sampling": "two_per_class_without_replacement_shared_frozen_indices_per_step",
+    "learning_rate": 0.2,
+    "predictor": {
+      "hidden": 128,
+      "activation": "ReLU",
+      "loss": "SmoothL1",
+      "label_scale": 10,
+      "optimizer": "Adam",
+      "learning_rate": 0.01,
+      "epochs": 30,
+      "batch": 32
+    },
+    "validation_role": "endpoint_diagnostic_no_multiconfiguration_selection",
+    "classical_baselines": [
+      "training_majority",
+      "always_up",
+      "always_down",
+      "linear_svc_C1",
+      "rbf_svc_C1_gamma_0.1_1_10",
+      "all_training_history_linear"
+    ],
+    "rbf_gamma_tie": "smallest_gamma",
+    "nonfinite_or_degenerate": "record_failure_no_replacement"
+  },
+  "execution": {
+    "shots_per_circuit": 512,
+    "max_circuits": 5292,
+    "max_requested_shots": 2709504,
+    "max_batches": 271,
+    "max_batch_size": 20,
+    "max_seconds": 10800,
+    "max_batch_seconds": 300,
+    "start": "first_persisted_reservation_in_new_window",
+    "deadline": "min(batch_reserved_time+300,window_start+10800)",
+    "analytic_preflight_circuits": 4,
+    "qukernet_circuits": 3044,
+    "random_circuits": 2244,
+    "phase_order": "alternate_arms_by_stage_then_both_endpoints_then_qukernet_initial_evaluation",
+    "automatic_retry": false,
+    "automatic_backend_switch": false,
+    "cancel_endpoint_available": false,
+    "stop_on": [
+      "submission_unknown",
+      "terminal_failure",
+      "invalid_result",
+      "batch_deadline",
+      "global_deadline",
+      "resource_limit",
+      "user_stop"
+    ],
+    "local_compute_cpus": 8,
+    "local_memory_gib": 32,
+    "new_private_cache_gib": 10
+  },
+  "analysis": {
+    "primary": "date_equal_weight_accuracy",
+    "paired_differences": [
+      "qukernet_endpoint-minus_same_configuration_initial",
+      "qukernet_endpoint-minus_random_endpoint",
+      "qukernet_endpoint-minus_rbf"
+    ],
+    "uncertainty": "paired_date_block_bootstrap_exploratory",
+    "bootstrap_repetitions": 10000,
+    "block_lengths": [
+      2,
+      1,
+      3
+    ],
+    "no_result_dependent_expansion": true,
+    "partial_results": "publish_status_and_cost_without_fabricated_comparisons"
+  },
+  "supersedes_protocol_id": "qukernet-50stocks-3h-cutoff20260325-20261115-v2"
+}

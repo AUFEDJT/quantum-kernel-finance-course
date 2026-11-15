@@ -64,9 +64,11 @@ def is_test_execution(execution_identity, predictor_override=False):
 class Checkpoints:
     def __init__(self, root, identity, source=None):
         candidate = Path(root).resolve()
-        code_root = next((p for p in HERE.parents if p.name == "code"), HERE.parent)
+        code_root = next((p for p in HERE.parents
+                          if p.name == "code" or p.name.startswith("code_")), HERE.parents[1])
         course = next((p for p in HERE.parents if (p/"课程大纲.md").exists()), code_root)
-        if candidate == course or candidate.is_relative_to(course):
+        if any(candidate == protected or candidate.is_relative_to(protected)
+               or protected.is_relative_to(candidate) for protected in (course, code_root)):
             raise ValueError("Results must be outside the public course/code directory")
         if any(part.casefold() == "share2" for part in candidate.parts):
             raise ValueError("Outputs cannot target share2")
@@ -118,15 +120,27 @@ class Checkpoints:
 
 
 class CloudKernel:
-    def __init__(self, provider, checkpoints, shots=128, kernel_seconds=300., batch_limit=20):
-        if shots < 1 or kernel_seconds <= 0 or not 1 <= batch_limit <= 20:
+    def __init__(self, provider, checkpoints, shots=128, kernel_seconds=300., batch_limit=20,
+                 batch_seconds=300.):
+        if shots < 1 or (kernel_seconds is not None and kernel_seconds <= 0) or not 1 <= batch_limit <= 20 or batch_seconds <= 0:
             raise ValueError("Invalid execution limits")
         self.provider, self.store = provider, checkpoints
-        self.shots, self.kernel_seconds, self.batch_limit = int(shots), float(kernel_seconds), int(batch_limit)
+        self.shots, self.batch_limit = int(shots), int(batch_limit)
+        self.kernel_seconds = None if kernel_seconds is None else float(kernel_seconds)
+        self.batch_seconds = float(batch_seconds)
+        profile = self.store.identity.get("profile", {})
+        if profile.get("paired_initialization_control"):
+            fields = [profile.get("stage"), self.store.identity.get("market_window"),
+                      self.store.identity.get("method"), self.store.identity.get("seed")]
+            if any(value is None or str(value) == "" for value in fields):
+                raise ValueError("Efficacy operation identity requires stage/quarter/method/seed")
+            self.operation_namespace = "/".join(str(value) for value in fields)
+        else:
+            self.operation_namespace = self.store.identity_hash
         self.invocation_calls = 0
 
     def deadline(self, outer=None):
-        own = time.monotonic()+self.kernel_seconds
+        own = math.inf if self.kernel_seconds is None else time.monotonic()+self.kernel_seconds
         return min(own, outer) if outer is not None else own
 
     def probabilities(self, specs, key, deadline):
@@ -139,7 +153,10 @@ class CloudKernel:
         intent = self.store.intent(key, request)
         try:
             results = self.provider.probability(specs, self.shots,
-                context={"phase": "main", "operation": key, "run_identity_sha256": self.store.identity_hash}, deadline=deadline)
+                context={"phase": "main", "operation": key,
+                         "operation_id": self.operation_namespace+"/"+key,
+                         "run_identity_sha256": self.store.identity_hash},
+                deadline=min(deadline, time.monotonic()+self.batch_seconds))
             if len(results) != len(specs):
                 raise RuntimeError("Cloud result count differs from submitted specifications")
             values = []
@@ -393,22 +410,77 @@ def train_predictor(layouts, labels, maximum_depth, seed):
         "epochs": 30, "batch_size": 32, "loss": "SmoothL1", "seed": seed}
 
 
-def finetune(kernel, x, y, layout, mask, seed, configuration, task, steps, batch_size, learning_rate, key, seconds=1800.):
+class OptimizationTimer:
+    """A durable wall-clock budget for optimization only, never renewed on restart."""
+    def __init__(self, store, key, seconds):
+        if not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("Positive finite optimization seconds required")
+        self.store = store
+        self.name = "timers/"+qc.digest(key)+".json"
+        path = store.out.path(self.name)
+        if path.exists():
+            self.record = json.loads(path.read_text(encoding="utf-8"))
+            if (self.record.get("identity_hash") != store.identity_hash or
+                    self.record.get("seconds") != seconds or self.record.get("key") != key):
+                raise ValueError("Optimization timer identity or budget changed")
+        else:
+            start = time.time()
+            self.record = {"identity_hash": store.identity_hash, "key": key, "seconds": seconds,
+                           "started_epoch": start, "deadline_epoch": start+seconds,
+                           "started_utc": datetime.fromtimestamp(start, timezone.utc).isoformat(),
+                           "deadline_utc": datetime.fromtimestamp(start+seconds, timezone.utc).isoformat(),
+                           "status": "running", "scope": "optimization_steps_only"}
+            store.write(self.name, self.record)
+
+    def deadline(self):
+        remaining = self.record["deadline_epoch"]-time.time()
+        if remaining <= 0:
+            raise TimeoutError("Persisted optimization deadline expired; will not reset")
+        return time.monotonic()+remaining
+
+    def finish(self):
+        self.deadline()
+        self.record.update(status="complete", finished_utc=now(),
+                           elapsed_seconds=time.time()-self.record["started_epoch"])
+        self.store.write(self.name, self.record)
+
+
+def finetune(kernel, x, y, layout, mask, seed, configuration, task, steps, batch_size, learning_rate, key,
+             seconds=1800., initial_validation=None):
     request = {"layout": layout, "mask": mask, "seed": seed, "configuration": configuration,
                "task": task, "steps": steps, "batch_size": batch_size, "learning_rate": learning_rate}
+    paired = initial_validation is not None
+    if paired:
+        request["paired_initialization_control"] = True
     saved = kernel.store.get(key+"/complete", request)
     if saved is not None:
         return saved
     # An incomplete configuration cannot silently reset its 1800-second budget.
     # Manual reconciliation is required before resuming an interrupted intent.
     marker = kernel.store.intent(key+"/complete", request)
-    start, deadline = time.monotonic(), time.monotonic()+seconds
+    start = time.monotonic()
+    deadline = None if paired else start+seconds
     params = qc.initial_parameters(x, layout, mask)
     initial = params.copy()
     initial_k = kernel.matrix(x, None, layout, mask, params, key+"/initial", deadline)
     initial_alignment, _ = alignment_and_gradient(initial_k, y, task)
+    initial_note = {}
+    if paired:
+        xv, yv, valid_dates = initial_validation
+        initial_bv = kernel.matrix(xv, x, layout, mask, params, key+"/initial_valid")
+        initial_evaluation = evaluate_validation(initial_k, initial_bv, y, yv, valid_dates, task)
+        initial_note = {"initial_train_kernel": initial_k.tolist(),
+                        "initial_valid_kernel": initial_bv.tolist(),
+                        "initial_evaluation": initial_evaluation}
+        kernel.store.write("traces/"+qc.digest(key)+"/initialization.json", {
+            "mask": mask, "initial_parameters": initial.tolist(), "initial_alignment": initial_alignment,
+            **initial_note, "selection_use": "paired diagnostic only; never ranks post candidates"})
+        timer = OptimizationTimer(kernel.store, key, float(seconds))
+        deadline = timer.deadline()
     trace = []
     for step in range(steps):
+        if paired:
+            deadline = timer.deadline()
         if time.monotonic() >= deadline:
             raise TimeoutError("Configuration deadline expired")
         indices = np.random.default_rng(np.random.SeedSequence([seed, configuration, step, 123])).choice(len(x), batch_size, replace=True)
@@ -430,6 +502,9 @@ def finetune(kernel, x, y, layout, mask, seed, configuration, task, steps, batch
                "parameters_after": params.tolist()}
         kernel.store.write(f"traces/{qc.digest(key)}/step{step:03}.json", row)
         trace.append(row)
+    if paired:
+        timer.finish()
+        deadline = None
     final_k = kernel.matrix(x, None, layout, mask, params, key+"/final", deadline)
     reject_constant_kernel(final_k)
     final_alignment, _ = alignment_and_gradient(final_k, y, task)
@@ -437,6 +512,8 @@ def finetune(kernel, x, y, layout, mask, seed, configuration, task, steps, batch
               "parameters": params.tolist(), "initial_alignment": initial_alignment,
               "final_alignment": final_alignment, "final_train_kernel": final_k.tolist(),
               "completed_steps": len(trace), "trace": trace, "seconds_this_invocation": time.monotonic()-start}
+    if paired:
+        result.update(initial_note, optimization_timer=timer.record)
     return kernel.store.finish(key+"/complete", marker, result)
 
 
@@ -460,6 +537,9 @@ def run_search(window, profile, provider, output, seed, task="classification", m
     """
     if task not in ("classification", "regression") or method not in ("qukernet", "random"):
         raise ValueError("Unsupported task or method")
+    paired = profile.get("paired_initialization_control", False)
+    if paired and task != "classification":
+        raise ValueError("Registered paired initialization efficacy protocol is classification only")
     arrays = {k: np.asarray(window[k]) for k in ("x_train", "x_valid", "x_test", "y_train", "y_valid", "y_test")}
     x, xv, xt, y, yv = (np.asarray(arrays[k], float) for k in ("x_train", "x_valid", "x_test", "y_train", "y_valid"))
     for split_name in ("train", "valid", "test"):
@@ -495,11 +575,14 @@ def run_search(window, profile, provider, output, seed, task="classification", m
                 "task": task, "method": method, "inputs": {k: array_hash(v) for k, v in arrays.items()},
                 "metadata_sha256": qc.digest(metadata), "test_override": predictor_factory is not None,
                 "provider_class": type(provider).__module__+"."+type(provider).__qualname__}
+    if paired:
+        identity["market_window"] = metadata.get("audit", {}).get("quarter")
     store = Checkpoints(output, identity, source=source)
     existing = store.get("workflow/complete", identity)
     if existing is not None:
         return existing
-    kernel = CloudKernel(provider, store, profile["shots"], profile.get("kernel_seconds", 300))
+    kernel = CloudKernel(provider, store, profile["shots"], profile.get("kernel_seconds", 300),
+                         batch_seconds=profile.get("batch_seconds", 300))
     started = time.monotonic()
     summary = {"workflow_status": "running", "scientific_status": "unassessed", "identity": identity,
                "execution_kind": "mock_test" if test_execution else "cloud_provider",
@@ -526,7 +609,9 @@ def run_search(window, profile, provider, output, seed, task="classification", m
                 row.update(status="scientific_invalid", reason=str(exc))
             labeled.append(row)
         store.write("labels.json", labeled)
-        split = int(.8*m)
+        split = int(profile.get("predictor_train_labels", int(.8*m)))
+        if not 1 <= split < m:
+            raise ValueError("Predictor split must leave nonempty train and heldout code sets")
         training = [row for row in labeled[:split] if row["status"] == "valid"]
         predictor_note = {"status": "not_used_by_random_control"}
         if method == "qukernet":
@@ -578,11 +663,19 @@ def run_search(window, profile, provider, output, seed, task="classification", m
             try:
                 row = evaluate_validation(k, bv, y, yv, valid_dates, task)
                 row.update(status="valid", layout=layout, layout_hash=qc.digest(layout))
+                if paired:
+                    row["raw_pre_alignment"] = alignment_and_gradient(k, y, task)[0]
             except ScientificInvalid as exc:
-                row = {"status": "scientific_invalid", "reason": str(exc), "layout": layout}
+                row = {"status": "scientific_invalid", "reason": str(exc), "layout": layout,
+                       "layout_hash": qc.digest(layout)}
+                if paired:
+                    row["raw_pre_alignment"] = alignment_and_gradient(k, y, task)[0]
             pre.append(row)
+            if paired:
+                store.write("pre_candidates.json", pre)
             for config in range(count):
-                mask = qc.make_mask(layout, seed, config, profile["max_parameters"])
+                mask = qc.make_mask(layout, seed, config, profile["max_parameters"],
+                                    exact_parameters=profile.get("exact_parameters"))
                 key = f"finetune/layout{i}/config{config}"
                 row = {"layout_index": i, "configuration": config, "layout": layout,
                        "layout_hash": qc.digest(layout), "mask": mask}
@@ -590,17 +683,20 @@ def run_search(window, profile, provider, output, seed, task="classification", m
                 config_deadline = time.monotonic()+config_limit
                 try:
                     tuned = finetune(kernel, x, y, layout, mask, seed, config, task, profile["steps"],
-                                     profile["batch_size"], profile["learning_rate"], key, config_limit)
+                                     profile["batch_size"], profile["learning_rate"], key, config_limit,
+                                     initial_validation=(xv, yv, valid_dates) if paired else None)
                     row.update(tuned)
                     if tuned["status"] != "valid":
                         raise ScientificInvalid(tuned["reason"])
                     remaining = config_limit-tuned["seconds_this_invocation"]
-                    if remaining <= 0:
+                    if not paired and remaining <= 0:
                         raise TimeoutError("Configuration has no remaining validation time")
                     bv = kernel.matrix(xv, x, layout, mask, tuned["parameters"], key+"/valid",
-                                       min(config_deadline, time.monotonic()+remaining))
+                                       None if paired else min(config_deadline, time.monotonic()+remaining))
                     evaluation = evaluate_validation(np.asarray(tuned["final_train_kernel"]), bv, y, yv, valid_dates, task)
                     row.update(evaluation)
+                    if paired:
+                        row["final_valid_kernel"] = bv.tolist()
                 except ScientificInvalid as exc:
                     row.update(status="scientific_invalid", reason=str(exc))
                     path = store.out.path(store.path_for(key+"/complete"))
@@ -623,6 +719,8 @@ def run_search(window, profile, provider, output, seed, task="classification", m
             "configuration": winner["configuration"], "validation_selection_loss": winner["selection_loss"],
             "configuration_attempts_terminal": len(finals), "valid_final_endpoints_scored": len(valid),
             "expected_configurations": top*count,
+            "initial_validation_used_for_selection": False,
+            "paired_initialization_evaluation": bool(paired),
             "selected_utc": now()})
         bt = kernel.matrix(xt, x, winner["layout"], winner["mask"], winner["parameters"], "winner/test")
         prediction, decisions = predict_bundle(winner["bundle"], bt)
@@ -643,6 +741,34 @@ def run_search(window, profile, provider, output, seed, task="classification", m
                 "test_balanced_accuracy": float(balanced_accuracy_score(yt, np.full(len(yt), majority)))}
             store.write("majority_class_baseline.json", majority_baseline)
             summary["majority_class_baseline"] = majority_baseline
+        if paired:
+            # Evaluate only the initialization of the POST-selected layout/mask.
+            # Neither this O evaluation nor initial V scores can choose a winner.
+            bi = kernel.matrix(xt, x, winner["layout"], winner["mask"], winner["initial_parameters"],
+                               "winner/paired_initial_test")
+            initial_prediction, initial_decisions = predict_bundle(winner["initial_evaluation"]["bundle"], bi)
+            initial_metric = {"date_equal_accuracy": modeling.date_equal_accuracy(yt, initial_prediction, test_dates),
+                              "balanced_accuracy": float(balanced_accuracy_score(yt, initial_prediction)),
+                              "roc_auc": float(roc_auc_score(yt, initial_decisions)) if len(np.unique(yt)) == 2 else None}
+            paired_result = {"metadata": test_dates, "prediction": initial_prediction.tolist(),
+                             "decision": initial_decisions.tolist(), "target": yt.tolist(), "metrics": initial_metric,
+                             "selected_layout_hash": winner["layout_hash"], "selected_configuration": winner["configuration"],
+                             "mask": winner["mask"], "initial_parameters": winner["initial_parameters"],
+                             "downstream": winner["initial_evaluation"]["bundle"],
+                             "selection_rule": "same configuration as post-V winner; no initialization selection",
+                             "initial_train_alignment": winner["initial_alignment"],
+                             "final_train_alignment": winner["final_alignment"]}
+            store.write("paired_initial_predictions.json", paired_result)
+            store.write("paired_initial_model_bundle.json", {"source_sha256": identity["source_sha256"],
+                "metadata": metadata, "layout": winner["layout"], "mask": winner["mask"],
+                "parameters": winner["initial_parameters"], "downstream": winner["initial_evaluation"]["bundle"],
+                "x_train_angles": x.tolist(), "training_sample_order": list(range(len(x)))})
+            raw_pre = next(r for r in pre if r.get("layout_hash") == winner["layout_hash"])
+            summary.update(paired_initial_test_metrics=initial_metric,
+                           paired_post_minus_initial_accuracy=metric["date_equal_accuracy"]-initial_metric["date_equal_accuracy"],
+                           selected_raw_pre_alignment=raw_pre["raw_pre_alignment"],
+                           selected_initial_alignment=winner["initial_alignment"],
+                           selected_final_alignment=winner["final_alignment"])
         store.write("model_bundle.json", {"source_sha256": identity["source_sha256"], "metadata": metadata,
             "layout": winner["layout"], "mask": winner["mask"], "parameters": winner["parameters"],
             "downstream": winner["bundle"], "x_train_angles": x.tolist(), "training_sample_order": list(range(len(x)))})
