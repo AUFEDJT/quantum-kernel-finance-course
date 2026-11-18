@@ -1,0 +1,337 @@
+Git、GitHub 与 AI Agent：一起建设开源课程
+
+开源课程把讲义、程序和修改过程放到公共仓库，让学习者也能参与建设。AI Agent 可以阅读文件、修改内容、运行命令，人负责提出值得解决的问题、判断证据和承担交付责任。协作需要留下清楚的记录：谁在做、为什么做、改了什么、怎样验证、谁同意纳入课程。
+
+一、先理解三个工具的分工
+
+Git 是版本管理工具，记录文件的修改历史；GitHub 是托管仓库、讨论任务和审阅成果的平台；Agent 是能够使用工具执行任务的助手。仓库保存项目文件和历史，分支让不同任务分别推进，main 通常作为团队认可的主线。commit 是本地的一次版本记录，push 才把提交上传；PR（Pull Request）是请团队审阅并合并修改的提案，merge 才把成果纳入目标分支。[1]
+
+因此，“AI 已经改好”“已经提交”“别人能看到”“已经进入正式课程”是不同状态。clone 把远程仓库复制到电脑；fork 在 GitHub 上建立自己名下的仓库副本，便于没有原仓库写权限的人贡献。PR 与拉取更新的 git pull 也是两件事。
+
+理解版本记录，还能帮助你判断 Agent 的工作是否可靠：它应说明改动理由，并给出可以检查的差异。任务出错时，团队可沿历史定位原因，再通过新的修改恢复正确行为。初学者先掌握这些动作之间的关系，就能提出明确要求，而不必一开始记住全部命令。
+
+二、每个人负责什么
+
+建议通过 GitHub 组织管理课程。负责人确定课程目标、范围和优先级，并管理成员权限；维护者拆分任务、安排审阅、合并成果和维护版本；贡献者认领任务、指挥 Agent、检查结果并回答问题；审阅者核对解释、代码、来源和实验。小团队可以兼任，但提交者应让另一人审阅自己的修改。
+
+Agent 根据授权执行阅读、修改、检查、提交等操作。任务仍由具体成员负责，发现不懂的公式或无法解释的实验结果，应请相关审阅者协助。组织身份、仓库权限和工作职责要分别理解：加入组织后，仍须获得相应仓库权限；“负责审阅”也不等于拥有管理组织的权限。[2]
+
+三、从一个任务走到正式成果
+
+第一步，读 README（项目说明）和贡献说明，检索已有 Issue，避免重复劳动。Issue 是公开的任务单，应写清问题、涉及章节或文件、预期成果和验收条件。维护者确认范围，指定主要负责人；较大的课程调整先讨论方案。
+
+第二步，贡献者把 Issue、文件位置和标准交给 Agent。例如“补充解析量子核 Notebook（交互式笔记）的输入说明与验证例子”，验收要求包括从新内核（重新启动的执行环境）顺序运行、结果可解释、来源可核查。Agent 在独立分支工作，提交者核对修改差异和实际检查结果。多个 Agent 并行时，各用独立工作目录与分支，涉及同一文件先协调。
+
+验收条件要描述可观察的结果，例如“读者能找到输入变量的含义”“例子在约定环境运行成功”“解释与公式一致”。一句“让这一章更好”难以判断完成程度。若缺少数据或依赖，贡献者应在任务里记录具体缺口，由维护者协调资源或缩小范围。
+
+第三步，将提交推送，创建关联 Issue 的 PR，说明解决什么问题、主要修改、验证方式和剩余限制。尚在进行的工作可开 Draft PR，方便团队提前查看；准备完成后标为可审阅。审阅者提出意见，贡献者让 Agent 在同一分支返修并再次推送，原 PR 会更新。[1]
+
+第四步，维护者确认验收条件、审阅意见和必要检查已经满足，再合并并更新任务记录。一次 PR 尽量解决一个完整问题。出现冲突意味着不同修改需要重新协调，应结合双方意图处理，随后重新检查受影响内容。
+
+四、怎样判断贡献有价值
+
+贡献可以是解释难懂概念、核验公式和文献、复现实验、补充作业、修复环境兼容问题，或提供可重复的错误报告。对本课程，Notebook 要从新内核顺序运行；图表应能追溯到配置和指标；数据使用、引用与署名遵守项目规范；未运行的实验如实标明。负结果也有价值，关键是过程和结论经得起复核。[14]
+
+whale-quant 的章节负责人和进度记录，可供课程分工参考；diy-llm 要求 AI 辅助贡献者理解并验证内容、能解释修改，zero-to-sglang 也重视复现证据。[3][4][5] 还要先读目标项目自己的规则：截至核查日，Codex 接受问题报告、分析和功能建议，不接受外部代码贡献或 PR。[6]
+
+阅读这些项目时，应借鉴适合自己的机制，并把本课程约定写下来。对新人来说，一条有文件位置、复现步骤和预期行为的问题报告，就可能帮助全体学习者；对维护者来说，把模糊需求整理成可验收任务，也是一项实质贡献。贡献价值取决于解决的问题和证据质量。
+
+五、怎样让 AI 理解并让团队看见进度
+
+有效提示词可按“对象＋动作＋范围＋验收＋交付”组织。例如：“读取 Issue #12，在独立分支完善指定 Notebook；运行相关检查，报告修改文件、执行结果和未解决问题；验证完成后提交、推送并创建草稿 PR。”这里的动词准确对应协作动作，能减少“帮我优化一下”带来的范围歧义。
+
+负责人在 Projects 看任务状态，在 Issue 看责任人和阻塞，在 PR 的 Files changed 看实际修改，在 Checks 与审阅记录看验证情况。GitHub 无法凭空知道成员电脑上 Agent 的进度；成员要更新任务状态、推送阶段成果并记录阻塞。AI 汇报可以辅助整理，人应核对真实文件、日志和结果，再判断任务是否完成。
+
+看板上的状态最好对应具体事实：开始执行后进入“进行中”，材料齐全后进入“待审阅”，验收并合并后进入“完成”。遇到问题要写明“需要谁提供什么”，而不只是填一个进度百分比。负责人也应定期处理等待审阅的任务，让贡献者知道下一步由谁接手。
+
+六、关于 Rust 的三句话
+
+Rust 兼顾运行效率与内存安全，通过所有权、借用检查和类型系统，在编译阶段发现许多错误。由这些特性可以推断，它能为 Agent 的“生成—检查—修正”提供明确反馈，这是理解它在 AI 辅助开发中吸引力的一个角度。它仍有学习成本，而且编译通过不代表功能正确，测试和人工验收仍然必要。[7]
+
+
+附录：从组织建立到协作验收
+
+阅读方式：正文约2000字（汉字逐字、英文按词，标点不计），以下操作、提示词和参考资料另计。
+操作顺序：负责人先按 A、B 建立组织与看板；成员接受邀请后按 E 克隆仓库，在 Agent 中打开该目录，再依次使用 D 的提示词，按 B 进入审阅和验收。
+适用方案：GitHub Free 组织＋公开课程仓库；网页名称以英文界面为例。
+资料核查：2026年11月18日。下列组织、团队和看板配置是建议方案，需按步骤建立。
+占位符约定：[组织名]、[用户名]、[Issue链接]等内容应替换为实际值；示例 #12 是演示编号。
+
+
+A. 负责人怎样建立组织、邀请成员
+
+1. 创建组织与确定仓库
+
+登录 GitHub，头像 → Settings → Organizations → New organization，选择免费方案，填写组织名称、联系邮箱等信息，按页面完成创建。[8]
+
+本课程当前公开仓库：
+https://github.com/Soros2040/quantum-kernel-finance-course
+默认分支是 main。组织建立后，可按下面“转移已有仓库”的路径保留现有历史。
+
+转移已有仓库：打开原仓库 → Settings → General → 页面底部 Danger Zone → Transfer，按提示填目标组织、仓库名并确认。操作者须有仓库管理权限及目标组织建仓权限，目标组织不能已有同名仓库或同一网络中的 Fork。转移后核对文件、Issue、PR、成员权限和设置，并通知成员更新本地远程地址：[8]
+
+git remote set-url origin "https://github.com/组织名/quantum-kernel-finance-course.git"
+git remote -v
+
+上面的“组织名”要替换；命令在现有本地仓库目录执行。转移会保留 Git 历史，旧仓库链接通常会重定向；不要在旧地址重新建仓，否则会破坏重定向。个人仓库转入组织时，未加入组织的 Issue 负责人分配可能被清除，应复核任务归属。
+
+全新课程的建仓路径：右上角“＋”→ New repository → Owner 选新组织 → 填名称 → Public → Create repository。全新空项目可初始化 README；若要上传已有本地 Git 历史，创建空仓库，不预填 README、许可证或 .gitignore，再按页面的“push an existing repository”连接。课程已有的代码与文档许可分别保留。[8]
+
+2. 邀请成员，并把权限落实到仓库
+
+组织主页 → People → Invite member → 输入对方 GitHub 用户名 → 选择 Member → 发送邀请。让对方接受；待接受不算已经加入。邀请通常7天过期，过期后重新邀请。[9]
+
+组织主页 → Teams → New team，建立：
+- course-maintainers：负责课程维护和审阅。
+- course-contributors：负责认领与实现任务。
+
+进入各 Team 的 Members 页面，把已接受邀请的人加进相应团队。再进入课程仓库 Settings → Collaborators & teams → Add teams，给维护团队 Maintain，给贡献团队 Write。[2][9]
+
+组织负责人保留 Owner 身份；其拥有组织仓库的 Admin 权限，可设置权限和规则。组织 Settings → Member privileges 中可将基础仓库权限设为 Read，再通过上述 Teams 授予需要的写权限。新成员用个人账号登录，Agent 使用成员已有且被授权的仓库访问方式执行任务。
+
+这里有三个不同概念：
+- 组织 Member：表明加入了组织。
+- 仓库 Write / Maintain：决定能对该仓库做哪些操作。
+- 贡献者 / 审阅者：团队分配的工作职责。
+
+Write 也包含满足规则后合并 PR 的能力。“最终由维护者合并”是本指南建议的团队约定；下面的一次审阅规则不会单独把合并按钮限定给维护团队。
+
+3. 设置 main 的合并规则
+
+由 Owner 或仓库 Admin 打开 Settings → Rulesets → New ruleset → New branch ruleset：
+- 命名为 main-review，目标分支选择 Default branch。
+- Enforcement status 设为 Active。
+- 勾选 Require a pull request before merging。
+- Required approvals 设为 1；需要另一位有 Write 或以上权限的成员批准，作者不能批准自己的 PR。
+- 勾选新提交使旧批准失效的选项，返修后重新审阅。
+- 保留 Block force pushes；首次配置不添加绕过规则的名单。
+- 已部署并实际运行自动检查后，再选择对应的 required status checks。
+- 保存后重新打开，核对目标分支及 Active 状态。[10]
+
+公开仓库可使用免费方案的分支规则集；私有仓库的可用功能取决于套餐。本地课程文件中未发现 GitHub Actions 工作流，因此不能把“自动测试已经启用”作为当前项目事实。设置一项真实的自动检查，需要另行建立工作流。
+
+
+B. 怎样分配任务、查看进度并验收
+
+1. 建立组织看板
+
+组织主页 → Projects → New project → Board，命名为“课程共建”。编辑 Status 字段，设置“待开始、进行中、待审阅、完成”。用标签 blocked 标记受阻任务，评论说明原因及需要谁协助。
+
+Project 右上角菜单 → Settings → Manage access，给 course-contributors 团队 Write，给 course-maintainers 团队 Admin。看板权限与仓库权限分别设置。要公开展示共建进度，可在 Project Settings 中将 Visibility 设为 Public。[11]
+
+2. 创建并认领 Issue
+
+课程仓库 → Issues → New issue，按以下字段填写，提交后在右侧 Assignees 选择一位主要负责人，在 Projects 加入上述看板，在 Labels 选择章节或任务类别。若标签尚不存在，由维护者先在 Issues → Labels 创建。Assignees 分配给成员，并不会自动启动其电脑里的任意 Agent。
+
+示例任务单：
+标题：补充解析量子核 Notebook 的输入说明与验证例子
+问题：学习者需要理解输入、核值和验证结果之间的关系。
+范围：notebooks/C08_C09_解析量子核与有限测量.ipynb
+交付：输入解释、可重复的验证例子、实际运行记录。
+验收：在约定环境从新内核顺序运行；说明与计算一致；引用有来源；输出符合课程公开规则。
+负责人：[用户名]
+阻塞：缺什么、需要谁提供；无阻塞时写“无”。
+
+建议把这套字段用于同类任务。代码问题补充预期行为、实际行为、环境与复现步骤；课程内容问题补充章节、原表述和依据。
+
+3. 查看成员做了什么
+
+- Projects：按 Assignees 筛选或分组，查看成员承担的任务及状态。
+- Issues：搜索 is:issue is:open assignee:用户名，查看尚未关闭的任务；打开评论查看阶段结果与阻塞。
+- Pull requests：搜索 is:pr is:open author:用户名，查看其发起的待处理提案。
+- PR → Conversation：看任务说明、讨论、审阅意见及合并状态。
+- PR → Files changed：看逐文件的新增和删除，确认实际改动范围。
+- PR → Commits：看提交演变；提交次数本身不表示贡献质量。
+- PR → Checks：看已配置自动检查的结果；没有检查记录时，需要查看提交者提供的运行证据。[12]
+
+提交者应把日志位置、运行命令和结果放进 PR。未推送的本地工作只有本地参与者能看到；还没有文件成果时，也应在 Issue 留下当前进展。看板状态可以人工维护；只有配置了相关自动化，特定事件才会自动更新状态。
+
+4. 从草稿到合并
+
+成员推送任务分支后：仓库 → Pull requests → New pull request，base 选 main，compare 选任务分支；核对文件列表，填写问题、改动、依据、验证和限制。尚在进行时，创建按钮旁下拉选择 Create draft pull request；描述写 Closes #12，将它关联本仓库任务。
+
+成员核验交付后，在草稿 PR 点击 Ready for review，并在 Reviewers 请求维护者审阅。审阅者打开 Files changed → Review changes，选择 Comment、Request changes 或 Approve，再点击 Submit review；普通留言“看起来可以”不等于正式批准。[12]
+
+有修改意见就继续在原分支提交、推送，PR 自动更新；检查失败就打开详细日志，修复后重跑。Draft PR 不能合并；改为 Ready for review 只是进入审阅阶段。
+
+维护者确认修改、批准及必需检查均满足后，点击 Merge pull request 并确认。Closes #12 写在 PR 描述中、且 PR 以默认分支为目标时，合并后相应 Issue 自动关闭；仅提交或推送不会关闭它。维护者核对关闭状态，将看板设为“完成”，成员再同步 main。其他目标分支不能照搬这一自动关闭规则。[12]
+
+
+C. 给 Agent 的名词与动词
+
+仓库 repository：读取、定位、检查；先说清仓库地址或工作目录。
+Issue 任务单：检索、创建、认领、关联、更新进度。
+分支 branch：创建、切换、同步；一个任务用一个分支。
+工作目录 worktree：为并行 Agent 隔离文件；不同分支不等于同一目录可同时编辑。
+差异 diff：查看、解释、审阅；指明与哪个分支或版本比较。
+提交 commit：记录一组完整修改；发生在本地仓库。
+推送 push：把本地提交上传到指定远程分支。
+拉取 pull：取回远程更新并整合到当前分支；执行前明确当前分支。
+PR 合并请求：创建、设为草稿、请求审阅、更新；说明目标分支。
+审阅 review：核对证据、提出修改、批准；AI 可辅助审查，人负责验收。
+合并 merge：将任务分支成果纳入目标分支。
+冲突 conflict：定位双方改动、协调意图、解决、重新验证。
+撤销 revert：以新的提交撤销已有提交的效果，便于保留协作历史。
+Fork 与 clone：前者建立 GitHub 仓库副本，后者下载仓库到本地。
+origin 与 upstream：远程仓库的惯用别名；Fork 流程里通常分别指自己的副本与原项目。
+
+表达意图时，把“帮我优化课程”写成“读取 Issue #12，仅完善指定 Notebook 的输入说明；运行约定检查，输出差异、结果和限制”。名词明确对象，动词明确动作，验收条件明确何时完成。
+
+
+D. 五组可复制的 AI 提示词
+
+先替换方括号内容。示例使用能访问本地项目和执行工具的 Agent；创建 GitHub 记录还需要已登录且具有对应权限。若工具无法执行某步，应说明停在哪里，给出具体操作入口，不把准备好的草稿报告为已发布。
+
+1. 读取项目，理解任务
+
+“项目是[仓库地址或本地目录]，任务为[Issue链接]。请阅读 README、贡献说明、环境说明和相关文件，解释问题、涉及范围及依赖，列出可观察的验收条件。只做调查与计划，指出缺失信息，并给出适合使用的分支名。用我能理解的话解释关键概念。”
+
+2. 执行任务并验证
+
+“请实现[Issue链接]的要求。先检查工作区已有改动，从最新 main 建立[任务分支]，保留他人的工作。只修改[文件范围]，验收条件是[具体标准]；并行任务使用独立工作目录。你可以完成相关修改及本地检查，按仓库实际环境运行，记录命令、结果和未通过项。交付差异摘要、运行证据与剩余限制；条件不足时记录阻塞。此次只运行本任务约定的本地实验。”
+
+3. 提交、推送并创建草稿 PR
+
+“本任务为[Issue链接]，工作目录为[路径]，分支为[任务分支]。请核对验收条件和实际差异，检查凭据、受限数据及 Notebook 输出。验证满足后，仅暂存本任务文件，确认整个暂存区仅含本任务修改，创建清楚的提交说明，推送到[远程/分支]，向[目标仓库]的 main 创建 Draft PR，描述问题、范围、依据、验证和限制，关联 Closes #[编号]。这些提交与推送操作已授权；本次交付到草稿 PR。返回真实 PR 链接和提交编号；验证未满足则保留工作并报告阻塞。”
+
+4. 根据审阅意见返修
+
+“请读取[PR链接]中的审阅意见，逐条核对相关代码、文字和证据，在原分支修复有依据的问题，并重新执行受影响的检查。可以提交和推送修复，更新该 PR 的验证说明；遇到有争议的意见，解释原因并列出需要人判断的事项。保留尚待审阅的讨论，不把未运行内容标为通过。返回意见、处理结果和证据的对应清单。”
+
+5. 汇报进度与支持人工验收
+
+“请核查[Issue链接]及关联[PR链接]，按实际仓库状态列出：已完成、未完成、阻塞、下一步负责人。给出分支、最新提交、修改文件、检查结果、审阅状态和可点击链接；区分本地改动、已推送、待审阅和已合并。为负责人准备验收清单，并草拟一条简洁的进度更新，供我核对后发布。”
+
+成员先理解、核验 Agent 的摘要，再用自己的话与团队沟通。若要向其他开源项目贡献，提示词还应加入对方的 CONTRIBUTING 要求；例如 diy-llm 对内容定稿和沟通表达另有明确要求。[4]
+
+
+E. 最小 Git 操作与常见阻塞
+
+命令用于理解动作，也可以交给 Agent 执行。以下示例适用于 PowerShell，执行前替换中文占位符，逐段核对结果。安装 Git 后可用 git --version 检查；使用 HTTPS 推送时，通过已配置的凭据管理器或工具登录完成认证，GitHub 账号密码不能直接当作 Git 的 HTTPS 密码。[13]
+
+1. 首次克隆；已有本地仓库直接进入其目录
+
+git clone "https://github.com/组织名/quantum-kernel-finance-course.git"
+cd "quantum-kernel-finance-course"
+
+在仓库内设置本人的提交署名；邮箱填写 GitHub 设置中确认的邮箱或提供的隐私邮箱：
+
+git config user.name "你的公开署名"
+git config user.email "你的提交邮箱"
+
+2. 检查工作区、更新主线并建立任务分支
+
+git status
+
+确认工作区干净，或已有修改已隔离保留后，再执行下面三条命令：
+
+git switch main
+git pull --ff-only
+git switch -c "course/12-kernel-validation"
+
+--ff-only 遇到分叉会停止，交给 Agent 解释分叉原因并提出保留双方工作的处理方案。[13]
+
+3. Agent 完成修改并运行任务要求的验证后，检查差异
+
+git diff --stat
+git diff -- "notebooks/C08_C09_解析量子核与有限测量.ipynb"
+
+Notebook 的原始差异可能较长，另请 Agent 按单元解释变化，并在 Notebook 界面核对内容。git diff 检查的是文件变化，不能替代运行验证。
+
+4. 仅暂存本任务文件，检查后提交、推送
+
+git add -- "notebooks/C08_C09_解析量子核与有限测量.ipynb"
+git diff --cached --stat
+git diff --cached -- "notebooks/C08_C09_解析量子核与有限测量.ipynb"
+
+确认整个暂存区只含本任务文件；若有其他任务的暂存内容，先让 Agent 隔离并保留，再提交。git commit 会提交整个暂存区，不能仅凭本次 git add 的文件列表判断范围。
+
+git commit -m "补充解析量子核输入说明与验证例子"
+git push -u origin "course/12-kernel-validation"
+
+以上命令只是示例，文件列表按实际任务调整。推送后按 B 节在 GitHub 创建 PR；普通 git push 本身不会创建 PR。
+
+5. PR 合并后，先确认工作区干净，再同步主线
+
+git switch main
+git pull --ff-only
+
+下一项任务从更新后的 main 建新分支。
+
+外部贡献者的 Fork 路径：
+原仓库 → Fork → 选择自己的账号创建副本 → clone 自己的副本 → 从最新主线建任务分支 → 修改、检查、commit、push → New pull request 中把 base repository 选为原项目、base 选 main，head repository 选自己的 Fork、compare 选任务分支。也可以从 Fork 页的 Contribute → Open pull request 进入。仍须遵守原项目接收 PR 的政策。[1]
+
+如需从原项目同步更新，可让 Agent 先检查 git remote -v，确认 origin 指向自己的 Fork、upstream 指向原项目，再取回并整合 upstream/main；GitHub Fork 页也有 Sync fork 入口。发生分叉或冲突时保留自己的工作，再解释差异并处理。
+
+几类常见阻塞：
+- 无法推送：检查登录账号、组织邀请是否接受、Team 是否获得仓库 Write；外部成员确认推送目标是自己的 Fork。
+- 无法改看板：检查 Project 的 Write 权限，仓库 Write 不会自动授予它。
+- PR 有冲突：在任务分支同步最新主线，结合双方意图解决；重新验证后提交和推送。
+- 自动检查失败：打开 Checks 的失败步骤看日志，修复后重跑；没有自动检查时报告实际手工验证。
+- Agent 无法运行实验：提供缺失依赖、数据或权限的具体信息，任务保持受阻；待条件满足后补验。
+- 合并后发现错误：创建修复或撤销的 PR，保留问题原因和验证记录；课程结论受影响时同步更正。
+
+
+参考资料与核查范围
+
+以下为一手来源，核查日期为2026年11月18日。项目协作制度可能调整，参与时再次阅读目标仓库当前规则。参考项目的做法用于启发本课程建议，组织权限、看板和保护规则以实际配置为准。
+
+[1] GitHub Flow；Fork 与共享仓库协作模型
+https://docs.github.com/en/get-started/using-github/github-flow
+https://docs.github.com/en/pull-requests/reference/pull-requests
+
+[2] GitHub：组织仓库角色与权限
+https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization
+
+[3] whale-quant：章节分工、进度与协作规范
+https://github.com/datawhalechina/whale-quant#协作规范
+
+[4] diy-llm：贡献指南与 AI 辅助贡献要求
+https://github.com/datawhalechina/diy-llm/blob/main/CONTRIBUTING.md
+
+[5] zero-to-sglang：编码伦理、开源贡献与验证证据
+https://github.com/datawhalechina/zero-to-sglang/blob/main/course-material/eng/part0/Part0-Coding-Ethics-and-Open-Source-Spirit.md
+
+[6] OpenAI Codex：当前贡献政策
+https://github.com/openai/codex/blob/main/docs/contributing.md
+
+[7] Rust 官网；官方教材“自动化测试”
+https://rust-lang.org/
+https://doc.rust-lang.org/book/ch11-00-testing.html
+正文对 Agent 工作方式的联系是基于语言特性的解释，不是语言流行度排名或增长统计。
+
+[8] GitHub：创建组织、创建仓库、转移仓库
+https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/creating-a-new-organization-from-scratch
+https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository
+https://docs.github.com/en/repositories/creating-and-managing-repositories/transferring-a-repository
+
+[9] GitHub：邀请组织成员、创建团队、授予仓库权限
+https://docs.github.com/en/organizations/managing-membership-in-your-organization/inviting-users-to-join-your-organization
+https://docs.github.com/en/organizations/organizing-members-into-teams/creating-a-team
+https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository
+
+[10] GitHub：创建规则集及可用规则
+https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository
+https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets
+
+[11] GitHub：创建 Projects、管理访问与公开状态
+https://docs.github.com/en/issues/planning-and-tracking-with-projects/creating-projects/creating-a-project
+https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-access-to-your-projects
+https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-visibility-of-your-projects
+
+[12] GitHub：批准 PR、切换草稿状态、关联 Issue；页面分栏另见[1]
+https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews
+https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/changing-the-stage-of-a-pull-request
+https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue
+
+[13] Git 官方安装入口、GitHub 贡献章节及 pull 参考；GitHub 认证说明
+https://git-scm.com/install/
+https://git-scm.com/book/en/v2/GitHub-Contributing-to-a-Project
+https://git-scm.com/docs/git-pull
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github
+
+[14] 本课程的当前仓库及本地贡献依据
+https://github.com/Soros2040/quantum-kernel-finance-course
+仓库内：README.md、docs/课程建设与贡献说明.md、docs/环境与复现说明.md、docs/许可与署名.md。
+
+
