@@ -1,0 +1,910 @@
+{
+  "schema_version": 1,
+  "upstream": "https://github.com/datawhalechina/quant-for-beginners",
+  "source_commit": "8fbf8942afc0e80d01538ee545e72174e099e81a",
+  "run_date": "2026-11-19",
+  "execution_host": "isolated Linux host",
+  "python": "3.11.15",
+  "created_utc": "2026-11-19T06:06:57.094756+00:00",
+  "original_workflow_terminal_utc": "2026-11-19T05:45:20.862720+00:00",
+  "chapters": [
+    {
+      "chapter": 1,
+      "source_path": "notebooks/phase1_intro/01_什么是量化金融.ipynb",
+      "original_source_sha256": "a2d7910b41e155738026d1fac10dacc49a2e81f455130ce7efcaf9eeeafc4c38",
+      "original_nonempty_code_cells": 5,
+      "original_code_error_cells": [
+        35
+      ],
+      "effective_run_variant": "original",
+      "effective_finished_utc": "2026-11-19T05:40:42.410314+00:00",
+      "experiments": [
+        {
+          "id": "c01_rules_random_buyhold",
+          "cells": [
+            6
+          ],
+          "input": "upstream seeded synthetic returns",
+          "original_attempt_error_cells": [],
+          "effective_status": "passed",
+          "effective_reason": "原始数据/模拟输入上完成原目标。",
+          "lab": {
+            "status": "not_required",
+            "reason": "原实验为构造数据/模拟/手算，无行情输入替换。"
+          }
+        },
+        {
+          "id": "c01_moving_averages",
+          "cells": [
+            21
+          ],
+          "input": "upstream seeded synthetic prices",
+          "original_attempt_error_cells": [],
+          "effective_status": "passed",
+          "effective_reason": "原始数据/模拟输入上完成原目标。",
+          "lab": {
+            "status": "not_required",
+            "reason": "原实验为构造数据/模拟/手算，无行情输入替换。"
+          }
+        },
+        {
+          "id": "c01_random_walk",
+          "cells": [
+            28
+          ],
+          "input": "50 seeded simulated paths",
+          "original_attempt_error_cells": [],
+          "effective_status": "passed",
+          "effective_reason": "原始数据/模拟输入上完成原目标。",
+          "lab": {
+            "status": "not_required",
+            "reason": "原实验为构造数据/模拟/手算，无行情输入替换。"
+          }
+        },
+        {
+          "id": "c01_kelly",
+          "cells": [
+            31
+          ],
+          "input": "upstream simulated betting process",
+          "original_attempt_error_cells": [],
+          "effective_status": "passed",
+          "effective_reason": "原始数据/模拟输入上完成原目标。",
+          "lab": {
+            "status": "not_required",
+            "reason": "原实验为构造数据/模拟/手算，无行情输入替换。"
+          }
+        },
+        {
+          "id": "c01_AAPL_OHLCV",
+          "cells": [
+            35
+          ],
+          "input": "yfinance AAPL period=6mo; effective installed default adjustment recorded",
+          "original_attempt_error_cells": [
+            35
+          ],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ch1_swap_symbol_price_volume",
+          "effective_status": "blocked",
+          "reason": "Required original-provider observations unavailable or insufficient",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch1_simulation_invariants",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "not_required",
+          "lab_reason": "使用原构造输入。"
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "source_path": "notebooks/phase1_intro/02_你的第一个量化实验.ipynb",
+      "original_source_sha256": "5d2e09c8045ddeec48f5b58682ec8f01dd8a43f07c791e6316f495d3e06409b9",
+      "original_nonempty_code_cells": 11,
+      "original_code_error_cells": [
+        13,
+        16
+      ],
+      "effective_run_variant": "original",
+      "effective_finished_utc": "2026-11-19T05:40:58.066178+00:00",
+      "experiments": [
+        {
+          "id": "c02_AAPL_OHLCV",
+          "cells": [
+            7,
+            8,
+            9
+          ],
+          "input": "yfinance AAPL period=1y",
+          "original_attempt_error_cells": [],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        },
+        {
+          "id": "c02_hand_return",
+          "cells": [
+            11
+          ],
+          "input": "100 to 110",
+          "original_attempt_error_cells": [],
+          "effective_status": "passed",
+          "effective_reason": "原始数据/模拟输入上完成原目标。",
+          "lab": {
+            "status": "not_required",
+            "reason": "原实验为构造数据/模拟/手算，无行情输入替换。"
+          }
+        },
+        {
+          "id": "c02_returns_distribution_cumulative",
+          "cells": [
+            13,
+            15,
+            16
+          ],
+          "input": "same AAPL sample",
+          "original_attempt_error_cells": [
+            13,
+            16
+          ],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        },
+        {
+          "id": "c02_three_stock_volatility",
+          "cells": [
+            18,
+            19,
+            20
+          ],
+          "input": "yfinance AAPL TSLA NVDA period=1y",
+          "original_attempt_error_cells": [],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ch2_alternative_company_histogram",
+          "effective_status": "blocked",
+          "reason": "Required original-provider observations unavailable or insufficient",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch2_simple_return_handcheck",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "not_required",
+          "lab_reason": "使用原构造输入。"
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "source_path": "notebooks/phase1_intro/03_移动平均线策略.ipynb",
+      "original_source_sha256": "9aeadeb7350899ed8ac97dc0c4a2403a20195894a331c184eeb98becf25989b5",
+      "original_nonempty_code_cells": 11,
+      "original_code_error_cells": [
+        23
+      ],
+      "effective_run_variant": "compatible",
+      "effective_finished_utc": "2026-11-19T05:44:35.797603+00:00",
+      "experiments": [
+        {
+          "id": "c03_simulated_regimes",
+          "cells": [
+            7,
+            9
+          ],
+          "input": "upstream seeded synthetic prices",
+          "original_attempt_error_cells": [],
+          "effective_status": "passed",
+          "effective_reason": "原始数据/模拟输入上完成原目标。",
+          "lab": {
+            "status": "not_required",
+            "reason": "原实验为构造数据/模拟/手算，无行情输入替换。"
+          }
+        },
+        {
+          "id": "c03_yahoo_MA_strategy",
+          "cells": [
+            11,
+            14,
+            16,
+            17,
+            19,
+            22,
+            23
+          ],
+          "input": "yfinance original TICKER and PERIOD; source alternative cell 13 omitted only for this branch",
+          "original_attempt_error_cells": [
+            23
+          ],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        },
+        {
+          "id": "c03_A_share_MA_strategy",
+          "cells": [
+            13,
+            14,
+            16,
+            17,
+            19,
+            22,
+            23
+          ],
+          "input": "600519 last 500 sessions; source-prescribed Tencent/Sina/Eastmoney fallback; qfq",
+          "original_attempt_error_cells": [
+            23
+          ],
+          "effective_status": "passed",
+          "effective_reason": "原文腾讯 A 股备选分支返回真实 qfq 数据；替换已移除的 pandas.last 后，最近500行原均线目标完成。",
+          "lab": {
+            "status": "passed",
+            "reason": "pro日线528行经加法前复权后日期及保留2位小数收盘与原腾讯冻结数据全部相等；原500行分支实跑零错误，MA5/MA20/信号独立核算通过。",
+            "rows_used": 500,
+            "input_rows_validated": 528,
+            "golden_crosses": 15,
+            "death_crosses": 14,
+            "finished_utc": "2026-11-19T05:58:53.978234+00:00"
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ch3_TSLA_and_MA10_30",
+          "effective_status": "blocked",
+          "reason": "Required original-provider observations unavailable or insufficient",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        }
+      ]
+    },
+    {
+      "chapter": 4,
+      "source_path": "notebooks/phase1_intro/04_策略回测.ipynb",
+      "original_source_sha256": "f0b6d140154292878367bf6f447845651ca65207d0826f0cc2aa526659c9c7aa",
+      "original_nonempty_code_cells": 8,
+      "original_code_error_cells": [
+        11
+      ],
+      "effective_run_variant": "original",
+      "effective_finished_utc": "2026-11-19T05:41:22.605753+00:00",
+      "experiments": [
+        {
+          "id": "c04_backtest_equity",
+          "cells": [
+            8,
+            9,
+            11,
+            13,
+            14
+          ],
+          "input": "yfinance AAPL and SPY period=2y; original lagged close-return rule",
+          "original_attempt_error_cells": [
+            11
+          ],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        },
+        {
+          "id": "c04_trade_round_winrate",
+          "cells": [
+            16
+          ],
+          "input": "same original trade marks and close prices",
+          "original_attempt_error_cells": [],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        },
+        {
+          "id": "c04_max_drawdown",
+          "cells": [
+            18
+          ],
+          "input": "same source NAV",
+          "original_attempt_error_cells": [],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ch4_NVDA_1y",
+          "effective_status": "blocked",
+          "reason": "Required original-provider observations unavailable or insufficient",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch4_NVDA_2y",
+          "effective_status": "blocked",
+          "reason": "Required original-provider observations unavailable or insufficient",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch4_NVDA_5y",
+          "effective_status": "blocked",
+          "reason": "Required original-provider observations unavailable or insufficient",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        }
+      ]
+    },
+    {
+      "chapter": 5,
+      "source_path": "notebooks/phase2_intro/01_理解波动率.ipynb",
+      "original_source_sha256": "8987c4cc5e4d01008490691aa059d5eca27a86c6d72417d0306cf697a5925ae9",
+      "original_nonempty_code_cells": 10,
+      "original_code_error_cells": [
+        16
+      ],
+      "effective_run_variant": "original",
+      "effective_finished_utc": "2026-11-19T05:41:39.341510+00:00",
+      "experiments": [
+        {
+          "id": "c05_equal_endpoint_paths",
+          "cells": [
+            9,
+            13
+          ],
+          "input": "upstream constructed paths",
+          "original_attempt_error_cells": [],
+          "effective_status": "passed",
+          "effective_reason": "原始数据/模拟输入上完成原目标。",
+          "lab": {
+            "status": "not_required",
+            "reason": "原实验为构造数据/模拟/手算，无行情输入替换。"
+          }
+        },
+        {
+          "id": "c05_AAPL_distribution",
+          "cells": [
+            16
+          ],
+          "input": "yfinance AAPL period=1y",
+          "original_attempt_error_cells": [
+            16
+          ],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        },
+        {
+          "id": "c05_std",
+          "cells": [
+            20
+          ],
+          "input": "constructed paths and same AAPL returns",
+          "original_attempt_error_cells": [],
+          "effective_status": "partial",
+          "effective_reason": "构造路径标准差完成；AAPL 数据部分因 Yahoo 空表受阻。",
+          "lab": {
+            "status": "partial",
+            "reason": "构造路径部分不需适配；行情部分因日期覆盖不足终止。"
+          }
+        },
+        {
+          "id": "c05_three_stock_volatility",
+          "cells": [
+            24
+          ],
+          "input": "yfinance AAPL TSLA NVDA period=2y",
+          "original_attempt_error_cells": [],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        },
+        {
+          "id": "c05_equal_return_volatility",
+          "cells": [
+            28
+          ],
+          "input": "upstream seeded synthetic returns",
+          "original_attempt_error_cells": [],
+          "effective_status": "passed",
+          "effective_reason": "原始数据/模拟输入上完成原目标。",
+          "lab": {
+            "status": "not_required",
+            "reason": "原实验为构造数据/模拟/手算，无行情输入替换。"
+          }
+        },
+        {
+          "id": "c05_risk_return_scatter",
+          "cells": [
+            32
+          ],
+          "input": "8 original Yahoo stocks period=2y plus 2 explicitly fictional points",
+          "original_attempt_error_cells": [],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        },
+        {
+          "id": "c05_starter_challenges",
+          "cells": [
+            36
+          ],
+          "input": "original AMD/MSFT and 8-stock Yahoo challenges period=1y",
+          "original_attempt_error_cells": [],
+          "effective_status": "blocked",
+          "effective_reason": "Yahoo 原数据请求被限流，返回空表；无异常的空表/NaN 输出不计成功。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ch5_starter_completion",
+          "effective_status": "blocked",
+          "reason": "Required original-provider observations unavailable or insufficient",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch5_volatility_handcheck",
+          "effective_status": "blocked",
+          "reason": "Required original-provider observations unavailable or insufficient",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        }
+      ]
+    },
+    {
+      "chapter": 6,
+      "source_path": "notebooks/phase2_intro/02_夏普比率与Beta.ipynb",
+      "original_source_sha256": "a98b1ac6406f00c2f2be20683c9cb111bc8ddb5cfb4edeefcda229a51960c9ca",
+      "original_nonempty_code_cells": 5,
+      "original_code_error_cells": [
+        7,
+        9,
+        11,
+        13
+      ],
+      "effective_run_variant": "compatible",
+      "effective_finished_utc": "2026-11-19T05:44:53.097871+00:00",
+      "experiments": [
+        {
+          "id": "c06_sharpe_and_scatter",
+          "cells": [
+            7,
+            9
+          ],
+          "input": "AkShare stock_us_daily qfq; 10 original symbols; today minus 3 years and 30 days",
+          "original_attempt_error_cells": [
+            7,
+            9
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        },
+        {
+          "id": "c06_beta_dual_formula",
+          "cells": [
+            11
+          ],
+          "input": "same stocks with SPY benchmark",
+          "original_attempt_error_cells": [
+            11
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        },
+        {
+          "id": "c06_statistics",
+          "cells": [
+            13
+          ],
+          "input": "same AAPL returns",
+          "original_attempt_error_cells": [
+            13
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ch6_sharpe_top3",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch6_JPM_NVDA_beta",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        }
+      ]
+    },
+    {
+      "chapter": 7,
+      "source_path": "notebooks/phase2_intro/03_最大回撤与仓位管理.ipynb",
+      "original_source_sha256": "01c15646ca9453bb42ca612cfdafb67f7c5a6eb39ea91e53d5c43bfce00c32b3",
+      "original_nonempty_code_cells": 5,
+      "original_code_error_cells": [
+        8,
+        10,
+        12,
+        14
+      ],
+      "effective_run_variant": "compatible",
+      "effective_finished_utc": "2026-11-19T05:44:55.928713+00:00",
+      "experiments": [
+        {
+          "id": "c07_drawdown",
+          "cells": [
+            8,
+            10
+          ],
+          "input": "AkShare AAPL qfq; today minus 3 years and 30 days",
+          "original_attempt_error_cells": [
+            8,
+            10
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        },
+        {
+          "id": "c07_full_half_position",
+          "cells": [
+            12,
+            14
+          ],
+          "input": "same AAPL close returns; original MA5/20",
+          "original_attempt_error_cells": [
+            12,
+            14
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。"
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ch7_MA10_30_position30",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch7_60day_recovery",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        }
+      ]
+    },
+    {
+      "chapter": 8,
+      "source_path": "notebooks/phase2_intro/04_多标的组合与相关性.ipynb",
+      "original_source_sha256": "9a8d47203481b8c02a4fbd1bbc4aab9a0d94e68075784428f4a72c529954411d",
+      "original_nonempty_code_cells": 6,
+      "original_code_error_cells": [
+        7,
+        10,
+        13,
+        16,
+        19
+      ],
+      "effective_run_variant": "compatible",
+      "effective_finished_utc": "2026-11-19T05:45:20.862720+00:00",
+      "experiments": [
+        {
+          "id": "c08_alignment",
+          "cells": [
+            7
+          ],
+          "input": "AkShare AAPL MSFT JPM XLE SPY qfq; 3 years plus 30 days; common dates",
+          "original_attempt_error_cells": [
+            7
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        },
+        {
+          "id": "c08_correlation_heatmap",
+          "cells": [
+            10,
+            13
+          ],
+          "input": "same common-date returns",
+          "original_attempt_error_cells": [
+            10,
+            13
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        },
+        {
+          "id": "c08_equal_weight_volatility",
+          "cells": [
+            16
+          ],
+          "input": "same AAPL MSFT JPM XLE returns",
+          "original_attempt_error_cells": [
+            16
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        },
+        {
+          "id": "c08_portfolio_vs_SPY",
+          "cells": [
+            19
+          ],
+          "input": "same daily-rebalanced equal-weight returns and SPY",
+          "original_attempt_error_cells": [
+            19
+          ],
+          "effective_status": "passed",
+          "effective_reason": "按官方更名将 stock_us_daily 改为 stock_us_hist_sina，保持新浪源、原标的、qfq、原时间窗和公式；原非空单元无错误。",
+          "lab": {
+            "status": "blocked",
+            "reason": "实验室美股只到2026-04-21，不能满足本次运行的原动态时间窗；终止该适配。 指定的SPY（第8章另需XLE）在已核美股、ETF、指数源无匹配。"
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ch8_alternative_symbols_1y",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch8_alternative_symbols_3y",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch8_alternative_symbols_5y",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        },
+        {
+          "id": "ch8_portfolio_and_covariance_checks",
+          "effective_status": "passed",
+          "reason": "原文可数值验证挑战实际完成；详细指标保留私有证据。",
+          "lab_status": "blocked",
+          "lab_reason": "原美股日期合同/指定基准不满足，按合同终止。"
+        }
+      ]
+    }
+  ],
+  "html_demos": [
+    {
+      "source_path": "assets/interactive/beta-demo.html",
+      "source_sha256": "5e7c482d50c1acc2f3b8580202f70a511f3ec0216ac571a43cb5940033ea9e73",
+      "status": "passed",
+      "controls_exercised": 14,
+      "reactive_controls": 13,
+      "page_errors_count": 0,
+      "visual_review": "40步后截图逐页检查：中文、曲线、公式及控制区可见。",
+      "validation_scope": "实际浏览器运行、控制响应与截图；不等于所有数学阐述均通过内容审校。",
+      "lab_status": "not_required"
+    },
+    {
+      "source_path": "assets/interactive/brownian-random-walk.html",
+      "source_sha256": "40051850384a5827ade7a81c8467ed0d7e6df1bb660aa1a8e6b1e8555ae9f7ba",
+      "status": "passed",
+      "controls_exercised": 13,
+      "reactive_controls": 9,
+      "page_errors_count": 0,
+      "visual_review": "40步后截图逐页检查：中文、曲线、公式及控制区可见。",
+      "validation_scope": "实际浏览器运行、控制响应与截图；不等于所有数学阐述均通过内容审校。",
+      "lab_status": "not_required"
+    },
+    {
+      "source_path": "assets/interactive/daily-return-demo.html",
+      "source_sha256": "343196aba63c61b664278a4dabf357d0c18da8bcfaec1c5843b81ad99242fa61",
+      "status": "passed",
+      "controls_exercised": 5,
+      "reactive_controls": 4,
+      "page_errors_count": 0,
+      "visual_review": "40步后截图逐页检查：中文、曲线、公式及控制区可见。",
+      "validation_scope": "实际浏览器运行、控制响应与截图；不等于所有数学阐述均通过内容审校。",
+      "lab_status": "not_required"
+    },
+    {
+      "source_path": "assets/interactive/population-variance-demo.html",
+      "source_sha256": "7e9e1e2bb24eb287cd8bc90c1c16812d227d188958c89e0c3d497be065d13660",
+      "status": "passed",
+      "controls_exercised": 5,
+      "reactive_controls": 4,
+      "page_errors_count": 0,
+      "visual_review": "40步后截图逐页检查：中文、曲线、公式及控制区可见。",
+      "validation_scope": "实际浏览器运行、控制响应与截图；不等于所有数学阐述均通过内容审校。",
+      "lab_status": "not_required"
+    },
+    {
+      "source_path": "assets/interactive/sharpe-ratio-demo.html",
+      "source_sha256": "516302528f717be914203671bfde891588d185c7eaca11455b00beb1f5720137",
+      "status": "passed",
+      "controls_exercised": 15,
+      "reactive_controls": 14,
+      "page_errors_count": 0,
+      "visual_review": "40步后截图逐页检查：中文、曲线、公式及控制区可见。",
+      "validation_scope": "实际浏览器运行、控制响应与截图；不等于所有数学阐述均通过内容审校。",
+      "lab_status": "not_required"
+    },
+    {
+      "source_path": "assets/interactive/std-dev-demo.html",
+      "source_sha256": "7c40b537ff801a8921e3a32fea9349531d3f0f6f4630932c6a0a34a9f8b34069",
+      "status": "passed",
+      "controls_exercised": 5,
+      "reactive_controls": 4,
+      "page_errors_count": 0,
+      "visual_review": "40步后截图逐页检查：中文、曲线、公式及控制区可见。",
+      "validation_scope": "实际浏览器运行、控制响应与截图；不等于所有数学阐述均通过内容审校。",
+      "lab_status": "not_required"
+    },
+    {
+      "source_path": "assets/interactive/variance-formulas-demo.html",
+      "source_sha256": "9a187942bbb2cf5dbb3b96d30e90214a2d646cfb523100af4031197a8d4ff176",
+      "status": "passed",
+      "controls_exercised": 21,
+      "reactive_controls": 17,
+      "page_errors_count": 0,
+      "visual_review": "40步后截图逐页检查：中文、曲线、公式及控制区可见。",
+      "validation_scope": "实际浏览器运行、控制响应与截图；不等于所有数学阐述均通过内容审校。",
+      "lab_status": "not_required"
+    }
+  ],
+  "counts": {
+    "notebooks": 8,
+    "original_nonempty_code_cells": 61,
+    "original_code_cells_without_python_error": 42,
+    "original_code_cells_with_error": 19,
+    "independent_experiments": 31,
+    "effective_experiment_status": {
+      "passed": 18,
+      "blocked": 12,
+      "partial": 1
+    },
+    "challenge_status": {
+      "blocked": 8,
+      "passed": 10
+    },
+    "lab_experiment_status": {
+      "not_required": 8,
+      "blocked": 21,
+      "passed": 1,
+      "partial": 1
+    },
+    "html_demos": 7,
+    "html_controls": 78,
+    "html_reactive_controls": 65
+  },
+  "evidence_archives": [
+    {
+      "name": "stage1_evidence.zip",
+      "sha256": "b88a881195a667220b1f1feeccedd160f6603deb81b4216791e3a299305f1bec"
+    },
+    {
+      "name": "stage2_evidence.zip",
+      "sha256": "0ef48782b6e2b477dc77f1bd2228194ae7011f435cee85519cabe9a9433ab4a4"
+    },
+    {
+      "name": "challenge_figures_evidence.zip",
+      "sha256": "1d4a3c50cae3e73c00137ed8428777814c73fa98dda351d7cf96a29f00f1879b"
+    }
+  ],
+  "caveats": [
+    "驱动exit0、单元无异常、HTML交互通过均不自动构成金融实验成功。",
+    "原始阶段末尾追加的状态采集单元曾因 numpy.shape 为函数报错；不属于原文单元，兼容复跑已修复采集器。",
+    "第4章按调仓日收盘价计算交易回合收益，与shift(1)信号乘当日close-to-close收益的净值口径不同；当前原行情受阻，未据此声称获利。",
+    "第8章逐日等权收益意味着每日再平衡，不能称固定股数买入持有；完全相关时组合波动是加权波动之和。",
+    "第1章乘法随机游走的终值不能直接断言正态；最低价格与最大回撤不是同一指标。",
+    "实验室基础600519日线缺16交易日；只用完整pro源。复权方法仅在本资产本区间核验，禁止无检查泛化。"
+  ],
+  "public_data_policy": "只发布状态、汇总和工具；行情快照、执行Notebook输出、浏览器截图和完整日志位于git忽略的私有证据目录。",
+  "challenge_figure_replay": {
+    "status": "passed",
+    "figures": 9,
+    "periods_years": [
+      1,
+      3,
+      5
+    ],
+    "input_source": "previously frozen original Sina responses",
+    "check": "row counts and annualized volatility reproduce prior numerical challenges within 1e-12"
+  },
+  "portability_check": "portability_check.json"
+}

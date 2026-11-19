@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "checked_utc": "2026-11-19T06:26:01.585943+00:00",
+  "status": "passed",
+  "scope": "公开入口的可移植性和实际子流程验证；完整8章原始执行结果见results.json，此次不重复请求行情。",
+  "platforms": [
+    {
+      "python": "3.11.15",
+      "platform": "linux",
+      "finished_utc": "2026-11-19T06:16:38.481045+00:00",
+      "checks": [
+        {
+          "name": "pip_check",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "name": "relative_root_dry_run",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "name": "relative_single_notebook",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "name": "setup_error_stops_execution",
+          "exit_code": 1,
+          "expected_exit_code": 1,
+          "passed": true
+        },
+        {
+          "name": "archived_lab_entry",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "name": "html_entry",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        }
+      ],
+      "source_tree_unchanged": true,
+      "source_files_checked": 64,
+      "original_simulation_cells_passed": 4,
+      "market_data_requests": 0,
+      "archived_lab_rows": 500,
+      "html_demos": 7,
+      "html_failure_exit_code_verified": true,
+      "final_html_statuses": [
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed"
+      ],
+      "final_runner_no_errors": true
+    },
+    {
+      "python": "3.12.14",
+      "platform": "win32",
+      "finished_utc": "2026-11-19T06:24:03.786975+00:00",
+      "checks": [
+        {
+          "name": "pip_check",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "name": "relative_root_dry_run",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "name": "relative_single_notebook",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "name": "setup_error_stops_execution",
+          "exit_code": 1,
+          "expected_exit_code": 1,
+          "passed": true
+        },
+        {
+          "name": "archived_lab_entry",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "name": "html_entry",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        }
+      ],
+      "source_tree_unchanged": true,
+      "source_files_checked": 64,
+      "original_simulation_cells_passed": 4,
+      "market_data_requests": 0,
+      "archived_lab_rows": 500,
+      "html_demos": 7
+    }
+  ],
+  "fixes": [
+    "单本Notebook相对源/输出路径绝对化，内核切换目录后证据仍写入指定私有目录。",
+    "初始化或显式输入适配失败后停止Notebook并返回非零退出码，禁止落回原联网取数。",
+    "HTML有页面/交互错误或无页面时返回非零退出码；总运行器传递子流程失败。",
+    "总运行器接受显式Chrome/Edge路径。",
+    "新增完整历史快照入口replay_lab.py，显式绑定已验证日期并保留差异清单。",
+    "README补齐Linux与PowerShell环境、浏览器和归档重放命令；补Windows平台依赖锁。"
+  ],
+  "hardcoded_old_remote_paths_found": false,
+  "public_tool_sha256": {
+    "append_challenges.py": "619c2728153f7a708fe76020cd251c8291bb7c12c1f2c986df2df03712a3b26b",
+    "challenges.py": "c5caa61e3f65f848fb810c384a9ed2f6a62aea55b7cca16d565fe844d0addbf7",
+    "freeze_lab.py": "88ff192e6de780f2e144a715f0b1e826ecb184b16c27d4eea5d7a5742705eed7",
+    "lab_adapter.py": "ffe2a6c7f4fcda9a85fae438e6621d5ec1d03199194c08bfd531ed152c780bfe",
+    "lab_checks.py": "14d3341e9df52e58cea174dc5f2705b3ce0e7bd9eb260c1685a8d0a3f5f1d789",
+    "lab_prelude.py": "267e60d89123e9356699e388f58515f613c476ad389c1cdf4172a7e59619ab84",
+    "make_compat.py": "8ac6055e12b34c0f4ea888c1fbb0389cc5bfc057d4cedd9ab8b5632dd3850d31",
+    "provenance_hook.py": "e570ba962488df9a6f6b966b6da57f820a00eac3819041c77f6da1520d2b3847",
+    "render_challenge_snapshots.py": "cc10ad517182ef2380c9bef5b2d7128aa788e86761fc45b5a9bb6192c4300476",
+    "replay_lab.py": "8a41a659f46ccd9d0e49c3887778c8a72f2d743c6bbea64e70142b9d9197fa9f",
+    "reproduce.py": "8270fd09d3add65dba62a37ae239d22d07571811dc590cea100601cf25636e79",
+    "run_html.py": "ff46dec1deee9cda5db9c41fd53a938fe74d32519509afac88b6e5b8d8912105",
+    "run_notebook.py": "11a2116d248b448d53982408f314ba73047995e1532636039bf3434252fe4743"
+  },
+  "dependency_locks": {
+    "environment.lock.txt": "9a4463821eedbe23ba7de435301a4690c2d6ba56affdd5d127f163bec41e749e",
+    "environment.windows.lock.txt": "f57d1a10657eb63fe60cee51f82db91bf4cf4b13d189fe89dfdded9282a79eb3"
+  },
+  "evidence_archives": [
+    {
+      "name": "portability_linux_final.zip",
+      "sha256": "483488fe4167d366e8e9966e4288e4bd9d41bd42245466032599cf82889d2bc7"
+    },
+    {
+      "name": "portability_windows_final.zip",
+      "sha256": "7ba9b84e77e278385b578bc3796b82d28c2fcd26c328c94ffc38c0dd466c7bd3"
+    }
+  ]
+}

@@ -1,0 +1,326 @@
+{
+  "schema": "whale_core_public_lab_results_v1",
+  "generated_date": "2026-11-19",
+  "summary": {
+    "total": 16,
+    "completed": 6,
+    "partial_diagnostics_only": 6,
+    "blocked": 4,
+    "failed": 0,
+    "original_contracts_terminated": 10
+  },
+  "cases": [
+    {
+      "id": "W03_daily",
+      "section": "3.3.1 日线",
+      "status": "partial",
+      "original_contract_status": "terminated",
+      "summary": "同标的、窗口的 125 行日线已读；缺少 turn、tradestatus、isST，原完整接口合同终止。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 125,
+        "missing_fields": [
+          "turn",
+          "tradestatus",
+          "isST"
+        ],
+        "original_contract_status": "terminated",
+        "diagnostic_status": "completed",
+        "required_field_coverage": false,
+        "provider_response_equivalence_claimed": false
+      }
+    },
+    {
+      "id": "W03_minute5",
+      "section": "3.3.1 分钟线",
+      "status": "partial",
+      "original_contract_status": "terminated",
+      "summary": "原完整接口合同终止。1008 个时间戳及 OHLC 与原输出完全相同；volume×100 后仍有 304 行差异（最大 92 股），amount 有 324 行差异（最大 16 元）。仅完成显式聚合与字段诊断。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 1008,
+        "missing_fields": [],
+        "original_contract_status": "terminated",
+        "diagnostic_status": "completed",
+        "required_field_coverage": true,
+        "provider_response_equivalence_claimed": false
+      }
+    },
+    {
+      "id": "W03_index",
+      "section": "3.3.1 指数",
+      "status": "completed",
+      "original_contract_status": "completed_with_lab_data",
+      "summary": "同上证指数、同窗口日线完成；preclose 与 pctChg 由完整日序列前一观测计算，未声称供应商响应逐值等价。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 117,
+        "missing_fields": [],
+        "original_contract_status": "completed_with_lab_data",
+        "diagnostic_status": "completed",
+        "required_field_coverage": true,
+        "provider_response_equivalence_claimed": false
+      }
+    },
+    {
+      "id": "W03_sz50",
+      "section": "3.3.1 上证50成分",
+      "status": "blocked",
+      "original_contract_status": "terminated",
+      "summary": "终止：实验室候选表是历史持仓/净值产品，不能证明查询时点的权威上证 50 成分、名称与 updateDate。",
+      "verification": "输入合同门禁未满足，未执行替代市场/窗口实验。",
+      "result": {}
+    },
+    {
+      "id": "W03_profit",
+      "section": "3.3.2 profit",
+      "status": "partial",
+      "original_contract_status": "terminated",
+      "summary": "原接口合同终止：同标的 2022Q4 原始银行财报及公告版本可读，但未建立 BaoStock 盈利能力派生字段映射。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 5,
+        "missing_fields": [
+          "roeAvg",
+          "npMargin",
+          "gpMargin",
+          "netProfit",
+          "epsTTM",
+          "MBRevenue",
+          "totalShare",
+          "liqaShare"
+        ],
+        "original_contract_status": "terminated",
+        "diagnostic_status": "completed",
+        "required_field_coverage": false,
+        "provider_response_equivalence_claimed": false
+      }
+    },
+    {
+      "id": "W03_operation",
+      "section": "3.3.2 operation",
+      "status": "partial",
+      "original_contract_status": "terminated",
+      "summary": "原接口合同终止：同标的 2022Q4 原始银行财报可读，但未建立营运能力派生字段映射。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 5,
+        "missing_fields": [
+          "NRTurnRatio",
+          "NRTurnDays",
+          "INVTurnRatio",
+          "INVTurnDays",
+          "CATurnRatio",
+          "AssetTurnRatio"
+        ],
+        "original_contract_status": "terminated",
+        "diagnostic_status": "completed",
+        "required_field_coverage": false,
+        "provider_response_equivalence_claimed": false
+      }
+    },
+    {
+      "id": "W03_growth",
+      "section": "3.3.2 growth",
+      "status": "partial",
+      "original_contract_status": "terminated",
+      "summary": "原接口合同终止：同标的 2022Q4 原始银行财报可读，但未建立成长能力派生字段映射。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 5,
+        "missing_fields": [
+          "YOYEquity",
+          "YOYAsset",
+          "YOYNI",
+          "YOYEPSBasic",
+          "YOYPNI"
+        ],
+        "original_contract_status": "terminated",
+        "diagnostic_status": "completed",
+        "required_field_coverage": false,
+        "provider_response_equivalence_claimed": false
+      }
+    },
+    {
+      "id": "W03_balance",
+      "section": "3.3.2 balance",
+      "status": "partial",
+      "original_contract_status": "terminated",
+      "summary": "原接口合同终止：同标的 2022Q4 原始银行财报可读，但未建立偿债能力派生字段映射。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 5,
+        "missing_fields": [
+          "currentRatio",
+          "quickRatio",
+          "cashRatio",
+          "YOYLiability",
+          "liabilityToAsset",
+          "assetToEquity"
+        ],
+        "original_contract_status": "terminated",
+        "diagnostic_status": "completed",
+        "required_field_coverage": false,
+        "provider_response_equivalence_claimed": false
+      }
+    },
+    {
+      "id": "W03_603019",
+      "section": "3.5 TuShare均线信号",
+      "status": "blocked",
+      "original_contract_status": "terminated",
+      "summary": "终止：原 get_hist_data 未指定窗口与排序；实验室有该股票，但不能从最新截止日反推原 API 默认输入。未另换窗口运行。",
+      "verification": "输入合同门禁未满足，未执行替代市场/窗口实验。",
+      "result": {}
+    },
+    {
+      "id": "W05_ma_values",
+      "section": "5.3.3",
+      "status": "completed",
+      "original_contract_status": "completed_with_lab_data",
+      "summary": "按原窗口计算 M5/M10/M20/M30，逐窗口未舍入平均值经独立求和核验，展示仍用原 pandas 两位小数舍入。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 40,
+        "windows": [
+          5,
+          10,
+          20,
+          30
+        ],
+        "independent_manual_windows_passed": true
+      }
+    },
+    {
+      "id": "W05_ma_strategy",
+      "section": "5.3.5",
+      "status": "completed",
+      "original_contract_status": "completed_with_lab_data",
+      "summary": "保留原 signal.diff 仓位公式，分别记录升序与降序输入；另存仅做多持仓诊断。原 position 是信号变化而非持有仓位，输出不作为有效交易业绩。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 603,
+        "original_logic_ascending_final": 1.1230791693510593,
+        "original_logic_descending_final": 0.9140966456789719,
+        "diagnostic_long_only_final": 0.5184177034063253,
+        "upstream_logic_retained": true,
+        "input_order_sensitivity_explicit": true,
+        "warning": "signal.diff is a change in signal, not a held position; these are code diagnostics, not validated trading returns."
+      }
+    },
+    {
+      "id": "W05_macd",
+      "section": "5.4.5",
+      "status": "completed",
+      "original_contract_status": "completed_with_lab_data",
+      "summary": "同沪深 300、同 2015–2018 窗口；TA-Lib 默认 12/26/9，信号滞后一期，无费用，核验 MACD=DIF−DEA。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 975,
+        "strategy_worth": 1.1339427032908442,
+        "benchmark_worth": 0.8267526302738318,
+        "fees": 0,
+        "macd_identity_passed": true
+      }
+    },
+    {
+      "id": "W07_metrics",
+      "section": "7.1",
+      "status": "completed",
+      "original_contract_status": "completed_with_lab_data",
+      "summary": "同三只股票与沪深 300、同 2018–2022 窗口；保留原 1826 分母及 sqrt(N) 比率，同时另列 252 交易日诊断。使用原价，未将其解释为含分红总回报。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 1215,
+        "series": 4,
+        "original_annualization_preserved": true,
+        "diagnostic_columns_separate": true,
+        "aggregate_metrics": [
+          {
+            "series": "sh600519",
+            "cumulative_price_return": 1.4536477942743482,
+            "original_annual_return": 0.131870258763397,
+            "diagnostic_annual_return": 0.2048043875788046,
+            "original_sharpe": 1.4045493248725225,
+            "diagnostic_sharpe": 0.6399232984773041
+          },
+          {
+            "series": "sh601398",
+            "cumulative_price_return": -0.2977346278317152,
+            "original_annual_return": -0.0476070665874742,
+            "diagnostic_annual_return": -0.0707405240075073,
+            "original_sharpe": -1.0525685371706202,
+            "diagnostic_sharpe": -0.4795581887028332
+          },
+          {
+            "series": "sh601318",
+            "cumulative_price_return": -0.3525278964044634,
+            "original_annual_return": -0.0582247652773709,
+            "diagnostic_annual_return": -0.0862790184653132,
+            "original_sharpe": -0.6122434015549115,
+            "diagnostic_sharpe": -0.2789427256529724
+          },
+          {
+            "series": "sh000300_index",
+            "cumulative_price_return": -0.0527884074604665,
+            "original_annual_return": -0.0074565405464201,
+            "diagnostic_annual_return": -0.0111944159288694,
+            "original_sharpe": -0.2129349839279328,
+            "diagnostic_sharpe": -0.0970147896292226
+          }
+        ]
+      }
+    },
+    {
+      "id": "W07_backtrader",
+      "section": "7.3",
+      "status": "completed",
+      "original_contract_status": "completed_with_lab_data",
+      "summary": "严格按实际代码使用 000001.SZ、10000 初始现金、固定 100 股、1% 佣金、MA5/10 与下一根开盘成交；核验订单、佣金、现金及末值。",
+      "verification": "原公式或字段核验完成；差异和终止条件见摘要。",
+      "result": {
+        "rows": 1215,
+        "initial_cash": 10000,
+        "final_value": 7847.8899999999985,
+        "orders_completed": 133,
+        "orders_other": 0,
+        "stake": 100,
+        "commission": 0.01,
+        "market_order_execution": "next_bar_open_default"
+      }
+    },
+    {
+      "id": "W07_T888_1d",
+      "section": "7.5 StupidHead",
+      "status": "blocked",
+      "original_contract_status": "terminated",
+      "summary": "终止：未找到可证明同一 T888 国债连续合约及换月/复权口径的实验室日线；教材附带原 CSV 保留，未用股指期货替代。",
+      "verification": "输入合同门禁未满足，未执行替代市场/窗口实验。",
+      "result": {}
+    },
+    {
+      "id": "W07_T888_15m",
+      "section": "7.5 StupidHead",
+      "status": "blocked",
+      "original_contract_status": "terminated",
+      "summary": "终止：未找到相同 T888 连续合约、换月/复权规则、15 分钟频率与窗口的实验室输入。",
+      "verification": "输入合同门禁未满足，未执行替代市场/窗口实验。",
+      "result": {}
+    }
+  ],
+  "provenance": {
+    "contracts_sha256": "309467dfb8682199147758a42b83da9cbd33da02f74d682563cf6e5eb2334840",
+    "runner_sha256": "5c44bd4515a51a061d776ea77fcbfe8af4e5db4ee952218bf4b8a43ef29ced96",
+    "input_manifest_sha256": "fb54a1323ae57956dbccc8d3526182bb6de3d7232f8c68e07335d8e035152cb6",
+    "run_packages": {
+      "numpy": "1.26.3",
+      "pandas": "2.1.4",
+      "scipy": "1.13.1",
+      "TA-Lib": "0.8.3",
+      "backtrader": "1.9.78.123"
+    },
+    "network_disabled": true,
+    "initial_validation_failure_and_targeted_retry_preserved": true
+  },
+  "boundary": "实验室行情替换后的教学计算；不是原在线供应商数值复现、投资建议或量子优势证据。逐行输入输出、订单和完整回执留在 private。"
+}

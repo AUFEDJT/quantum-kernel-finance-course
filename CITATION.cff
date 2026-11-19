@@ -8,7 +8,7 @@ authors:
   - name: AUFE
   - family-names: Lei
     given-names: Cong
-repository-code: "https://github.com/Soros2040/quantum-kernel-finance-course"
+repository-code: "https://github.com/AUFEDJT/quantum-kernel-finance-course"
 license: MIT
 date-released: 2026-11-10
 version: "0.2.0"
