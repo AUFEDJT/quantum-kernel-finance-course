@@ -1,0 +1,337 @@
+{
+  "schema": "whale_core_lab_contracts_v1",
+  "created_date": "2026-11-19",
+  "upstream": "datawhalechina/whale-quant",
+  "license": "CC BY-NC-SA 4.0 for source-derived sections",
+  "source_sha256": {
+    "classic/sources/whale-quant/docs/ch03_股票数据获取/ch03_股票数据获取.md": "6d05feb7f3a6936d3d128bdbede578054b663be3c38dd81ac85823e9a190ff5b",
+    "classic/sources/whale-quant/docs/ch05_量化择时策略/ch05_量化择时策略.md": "7da8cd28c78a100ad2c6969b038af518a08f13bda48924339380cd520c78f376",
+    "classic/sources/whale-quant/docs/ch07_量化回测/ch07_量化回测.md": "d54718efd7786372db5001f0232689d8a8cb8444a8589a6b6f9ca4dce075f42b"
+  },
+  "cases": [
+    {
+      "id": "W03_daily",
+      "section": "3.3.1 日线",
+      "original_target": "sh.600000",
+      "original_window": [
+        "2022-07-01",
+        "2022-12-31"
+      ],
+      "required_fields": [
+        "date",
+        "code",
+        "open",
+        "high",
+        "low",
+        "close",
+        "preclose",
+        "volume",
+        "amount",
+        "adjustflag",
+        "turn",
+        "tradestatus",
+        "pctChg",
+        "isST"
+      ],
+      "method": "unadjusted_daily_interface",
+      "notes": []
+    },
+    {
+      "id": "W03_minute5",
+      "section": "3.3.1 分钟线",
+      "original_target": "sh.600000",
+      "original_window": [
+        "2022-07-01",
+        "2022-07-31"
+      ],
+      "required_fields": [
+        "date",
+        "time",
+        "code",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "amount",
+        "adjustflag"
+      ],
+      "method": "unadjusted_5minute_interface",
+      "notes": []
+    },
+    {
+      "id": "W03_index",
+      "section": "3.3.1 指数",
+      "original_target": "sh.000001",
+      "original_window": [
+        "2022-01-01",
+        "2022-06-30"
+      ],
+      "required_fields": [
+        "date",
+        "code",
+        "open",
+        "high",
+        "low",
+        "close",
+        "preclose",
+        "volume",
+        "amount",
+        "pctChg"
+      ],
+      "method": "index_daily_interface",
+      "notes": []
+    },
+    {
+      "id": "W03_sz50",
+      "section": "3.3.1 上证50成分",
+      "original_target": "sh.000016",
+      "original_window": "query_time_current",
+      "required_fields": [
+        "updateDate",
+        "code",
+        "code_name"
+      ],
+      "method": "current_constituents",
+      "notes": [
+        "不能把历史截面的成分列冒充执行日当前成分。"
+      ]
+    },
+    {
+      "id": "W03_profit",
+      "section": "3.3.2 profit",
+      "original_target": "sh.600036",
+      "original_window": "2022Q4",
+      "required_fields": [
+        "code",
+        "pubDate",
+        "statDate",
+        "roeAvg",
+        "npMargin",
+        "gpMargin",
+        "netProfit",
+        "epsTTM",
+        "MBRevenue",
+        "totalShare",
+        "liqaShare"
+      ],
+      "method": "baostock_profit_interface",
+      "notes": [
+        "XBX原始报表字段不能未经定义核实改称BaoStock派生指标。"
+      ]
+    },
+    {
+      "id": "W03_operation",
+      "section": "3.3.2 operation",
+      "original_target": "sh.600036",
+      "original_window": "2022Q4",
+      "required_fields": [
+        "code",
+        "pubDate",
+        "statDate",
+        "NRTurnRatio",
+        "NRTurnDays",
+        "INVTurnRatio",
+        "INVTurnDays",
+        "CATurnRatio",
+        "AssetTurnRatio"
+      ],
+      "method": "baostock_operation_interface",
+      "notes": [
+        "XBX原始报表字段不能未经定义核实改称BaoStock派生指标。"
+      ]
+    },
+    {
+      "id": "W03_growth",
+      "section": "3.3.2 growth",
+      "original_target": "sh.600036",
+      "original_window": "2022Q4",
+      "required_fields": [
+        "code",
+        "pubDate",
+        "statDate",
+        "YOYEquity",
+        "YOYAsset",
+        "YOYNI",
+        "YOYEPSBasic",
+        "YOYPNI"
+      ],
+      "method": "baostock_growth_interface",
+      "notes": [
+        "XBX原始报表字段不能未经定义核实改称BaoStock派生指标。"
+      ]
+    },
+    {
+      "id": "W03_balance",
+      "section": "3.3.2 balance",
+      "original_target": "sh.600036",
+      "original_window": "2022Q4",
+      "required_fields": [
+        "code",
+        "pubDate",
+        "statDate",
+        "currentRatio",
+        "quickRatio",
+        "cashRatio",
+        "YOYLiability",
+        "liabilityToAsset",
+        "assetToEquity"
+      ],
+      "method": "baostock_balance_interface",
+      "notes": [
+        "XBX原始报表字段不能未经定义核实改称BaoStock派生指标。"
+      ]
+    },
+    {
+      "id": "W03_603019",
+      "section": "3.5 TuShare均线信号",
+      "original_target": "603019",
+      "original_window": "get_hist_data_default_dynamic",
+      "required_fields": [
+        "date",
+        "close"
+      ],
+      "method": "ma5_ma20_strict_cross",
+      "notes": [
+        "保留未指定固定时间范围、未排序的原代码；历史切片只能作为另立范围的诊断。"
+      ]
+    },
+    {
+      "id": "W05_ma_values",
+      "section": "5.3.3",
+      "original_target": "000001.SZ",
+      "original_window": [
+        "2023-05-01",
+        "2023-06-30"
+      ],
+      "required_fields": [
+        "date",
+        "close"
+      ],
+      "method": "ma5_10_20_30_round2",
+      "notes": []
+    },
+    {
+      "id": "W05_ma_strategy",
+      "section": "5.3.5",
+      "original_target": "000001.SZ",
+      "original_window": [
+        "2021-01-01",
+        "2023-06-30"
+      ],
+      "required_fields": [
+        "date",
+        "close"
+      ],
+      "method": "original_signal_diff_return",
+      "notes": [
+        "原代码未显式排序，并将signal.diff()称为position。保留其计算；升序及降序分别存结果，校正长仓仅作为额外诊断。"
+      ]
+    },
+    {
+      "id": "W05_macd",
+      "section": "5.4.5",
+      "original_target": "000300.XSHG",
+      "original_window": [
+        "2015-01-01",
+        "2018-12-31"
+      ],
+      "required_fields": [
+        "date",
+        "close"
+      ],
+      "method": "talib_macd_12_26_9",
+      "notes": [
+        "MACD为DIF-DEA；信号滞后一期，无费用。"
+      ]
+    },
+    {
+      "id": "W07_metrics",
+      "section": "7.1",
+      "original_target": [
+        "600519.SH",
+        "601398.SH",
+        "601318.SH",
+        "000300.XSHG"
+      ],
+      "original_window": [
+        "2018-01-01",
+        "2022-12-31"
+      ],
+      "required_fields": [
+        "date",
+        "close"
+      ],
+      "method": "original_annualization_metrics",
+      "notes": [
+        "保留1826分母、sqrt(N)夏普/信息比率；另列按交易日252缩放的诊断。原价持有不是总回报。"
+      ]
+    },
+    {
+      "id": "W07_backtrader",
+      "section": "7.3",
+      "original_target": "000001.SZ",
+      "original_window": [
+        "2018-01-01",
+        "2023-01-01"
+      ],
+      "required_fields": [
+        "date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume"
+      ],
+      "method": "backtrader_ma5_10_fixed100",
+      "notes": [
+        "按实际代码：初始现金10000、固定100股、双边佣金0.01、默认次根开盘成交。文字中的002594/全仓/基准未在实际代码实施。"
+      ]
+    },
+    {
+      "id": "W07_T888_1d",
+      "section": "7.5 StupidHead",
+      "original_target": "T888",
+      "original_window": [
+        "2020-01-02",
+        "2023-06-30"
+      ],
+      "required_fields": [
+        "datetime",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "dominant_id"
+      ],
+      "method": "stupidhead_ma5_10_1d",
+      "notes": [
+        "需证明同一连续合约、换月及复权口径、频率、窗口。教材附带CSV不是实验室数据适配输入。"
+      ]
+    },
+    {
+      "id": "W07_T888_15m",
+      "section": "7.5 StupidHead",
+      "original_target": "T888",
+      "original_window": [
+        "2020-01-02 09:30",
+        "2023-06-30 15:15"
+      ],
+      "required_fields": [
+        "datetime",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "dominant_id"
+      ],
+      "method": "stupidhead_ma5_10_15m",
+      "notes": [
+        "需证明同一连续合约、换月及复权口径、频率、窗口。教材附带CSV不是实验室数据适配输入。"
+      ]
+    }
+  ],
+  "execution_requires": "Both upstream suites terminal, explicit parent release, frozen lab slices, no credentials or live source writes."
+}

@@ -1,0 +1,300 @@
+{
+  "source_commit": "8fbf8942afc0e80d01538ee545e72174e099e81a",
+  "chapters": [
+    {
+      "chapter": 1,
+      "source_path": "notebooks/phase1_intro/01_什么是量化金融.ipynb",
+      "experiments": [
+        {
+          "id": "c01_rules_random_buyhold",
+          "cells": [
+            6
+          ],
+          "input": "upstream seeded synthetic returns"
+        },
+        {
+          "id": "c01_moving_averages",
+          "cells": [
+            21
+          ],
+          "input": "upstream seeded synthetic prices"
+        },
+        {
+          "id": "c01_random_walk",
+          "cells": [
+            28
+          ],
+          "input": "50 seeded simulated paths"
+        },
+        {
+          "id": "c01_kelly",
+          "cells": [
+            31
+          ],
+          "input": "upstream simulated betting process"
+        },
+        {
+          "id": "c01_AAPL_OHLCV",
+          "cells": [
+            35
+          ],
+          "input": "yfinance AAPL period=6mo; effective installed default adjustment recorded"
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "source_path": "notebooks/phase1_intro/02_你的第一个量化实验.ipynb",
+      "experiments": [
+        {
+          "id": "c02_AAPL_OHLCV",
+          "cells": [
+            7,
+            8,
+            9
+          ],
+          "input": "yfinance AAPL period=1y"
+        },
+        {
+          "id": "c02_hand_return",
+          "cells": [
+            11
+          ],
+          "input": "100 to 110"
+        },
+        {
+          "id": "c02_returns_distribution_cumulative",
+          "cells": [
+            13,
+            15,
+            16
+          ],
+          "input": "same AAPL sample"
+        },
+        {
+          "id": "c02_three_stock_volatility",
+          "cells": [
+            18,
+            19,
+            20
+          ],
+          "input": "yfinance AAPL TSLA NVDA period=1y"
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "source_path": "notebooks/phase1_intro/03_移动平均线策略.ipynb",
+      "experiments": [
+        {
+          "id": "c03_simulated_regimes",
+          "cells": [
+            7,
+            9
+          ],
+          "input": "upstream seeded synthetic prices"
+        },
+        {
+          "id": "c03_yahoo_MA_strategy",
+          "cells": [
+            11,
+            14,
+            16,
+            17,
+            19,
+            22,
+            23
+          ],
+          "input": "yfinance original TICKER and PERIOD; source alternative cell 13 omitted only for this branch"
+        },
+        {
+          "id": "c03_A_share_MA_strategy",
+          "cells": [
+            13,
+            14,
+            16,
+            17,
+            19,
+            22,
+            23
+          ],
+          "input": "600519 last 500 sessions; source-prescribed Tencent/Sina/Eastmoney fallback; qfq"
+        }
+      ]
+    },
+    {
+      "chapter": 4,
+      "source_path": "notebooks/phase1_intro/04_策略回测.ipynb",
+      "experiments": [
+        {
+          "id": "c04_backtest_equity",
+          "cells": [
+            8,
+            9,
+            11,
+            13,
+            14
+          ],
+          "input": "yfinance AAPL and SPY period=2y; original lagged close-return rule"
+        },
+        {
+          "id": "c04_trade_round_winrate",
+          "cells": [
+            16
+          ],
+          "input": "same original trade marks and close prices"
+        },
+        {
+          "id": "c04_max_drawdown",
+          "cells": [
+            18
+          ],
+          "input": "same source NAV"
+        }
+      ]
+    },
+    {
+      "chapter": 5,
+      "source_path": "notebooks/phase2_intro/01_理解波动率.ipynb",
+      "experiments": [
+        {
+          "id": "c05_equal_endpoint_paths",
+          "cells": [
+            9,
+            13
+          ],
+          "input": "upstream constructed paths"
+        },
+        {
+          "id": "c05_AAPL_distribution",
+          "cells": [
+            16
+          ],
+          "input": "yfinance AAPL period=1y"
+        },
+        {
+          "id": "c05_std",
+          "cells": [
+            20
+          ],
+          "input": "constructed paths and same AAPL returns"
+        },
+        {
+          "id": "c05_three_stock_volatility",
+          "cells": [
+            24
+          ],
+          "input": "yfinance AAPL TSLA NVDA period=2y"
+        },
+        {
+          "id": "c05_equal_return_volatility",
+          "cells": [
+            28
+          ],
+          "input": "upstream seeded synthetic returns"
+        },
+        {
+          "id": "c05_risk_return_scatter",
+          "cells": [
+            32
+          ],
+          "input": "8 original Yahoo stocks period=2y plus 2 explicitly fictional points"
+        },
+        {
+          "id": "c05_starter_challenges",
+          "cells": [
+            36
+          ],
+          "input": "original AMD/MSFT and 8-stock Yahoo challenges period=1y"
+        }
+      ]
+    },
+    {
+      "chapter": 6,
+      "source_path": "notebooks/phase2_intro/02_夏普比率与Beta.ipynb",
+      "experiments": [
+        {
+          "id": "c06_sharpe_and_scatter",
+          "cells": [
+            7,
+            9
+          ],
+          "input": "AkShare stock_us_daily qfq; 10 original symbols; today minus 3 years and 30 days"
+        },
+        {
+          "id": "c06_beta_dual_formula",
+          "cells": [
+            11
+          ],
+          "input": "same stocks with SPY benchmark"
+        },
+        {
+          "id": "c06_statistics",
+          "cells": [
+            13
+          ],
+          "input": "same AAPL returns"
+        }
+      ]
+    },
+    {
+      "chapter": 7,
+      "source_path": "notebooks/phase2_intro/03_最大回撤与仓位管理.ipynb",
+      "experiments": [
+        {
+          "id": "c07_drawdown",
+          "cells": [
+            8,
+            10
+          ],
+          "input": "AkShare AAPL qfq; today minus 3 years and 30 days"
+        },
+        {
+          "id": "c07_full_half_position",
+          "cells": [
+            12,
+            14
+          ],
+          "input": "same AAPL close returns; original MA5/20"
+        }
+      ]
+    },
+    {
+      "chapter": 8,
+      "source_path": "notebooks/phase2_intro/04_多标的组合与相关性.ipynb",
+      "experiments": [
+        {
+          "id": "c08_alignment",
+          "cells": [
+            7
+          ],
+          "input": "AkShare AAPL MSFT JPM XLE SPY qfq; 3 years plus 30 days; common dates"
+        },
+        {
+          "id": "c08_correlation_heatmap",
+          "cells": [
+            10,
+            13
+          ],
+          "input": "same common-date returns"
+        },
+        {
+          "id": "c08_equal_weight_volatility",
+          "cells": [
+            16
+          ],
+          "input": "same AAPL MSFT JPM XLE returns"
+        },
+        {
+          "id": "c08_portfolio_vs_SPY",
+          "cells": [
+            19
+          ],
+          "input": "same daily-rebalanced equal-weight returns and SPY"
+        }
+      ]
+    }
+  ],
+  "lab_phase": "completed_after_both_original_course_terminal_states",
+  "lab_requirements": "Inspect actual matching US/A-share symbol files and action records; preserve each experiment's asset identity, date horizon and adjustment semantics or report a specific mismatch. Synthetic mechanics and self-contained HTML need no market-data substitution."
+}

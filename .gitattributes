@@ -1,0 +1,4 @@
+# Preserve pinned teaching materials and the checksums in the reproducibility reports.
+classic/sources/** -text
+experiments/classic/quant-for-beginners/*.py -text
+experiments/classic/quant-for-beginners/*.lock.txt -text
